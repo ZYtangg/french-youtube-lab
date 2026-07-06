@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="-apple-system, 'Helvetica Neue', 'PingFang SC', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7F8FA"/>
+      <stop offset="1" stop-color="#EAECF0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FE7F2D"/>
+      <stop offset="1" stop-color="#FCA311"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#233D4D" flood-opacity="0.12"/>
+    </filter>
+    <clipPath id="vidClip"><rect x="40" y="150" width="620" height="349" rx="10"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect width="1280" height="720" fill="url(#bg)"/>
+
+  <!-- top header bar -->
+  <rect x="0" y="0" width="1280" height="88" fill="#233D4D"/>
+  <circle cx="46" cy="44" r="17" fill="url(#accent)"/>
+  <text x="46" y="51" font-size="20" text-anchor="middle" fill="#fff" font-weight="700">Fr</text>
+  <text x="78" y="40" font-size="22" fill="#fff" font-weight="700">地道法语表达实验室</text>
+  <text x="78" y="66" font-size="14" fill="#9FB2C0">French Native-Expression Lab · 从 YouTube 视频学法国人真实说法</text>
+  <text x="1240" y="40" font-size="13" fill="#9FB2C0" text-anchor="end">Ma mère met de grands espoirs…</text>
+  <text x="1240" y="62" font-size="12" fill="#6C8399" text-anchor="end">bref. · 7:06 · 人工字幕</text>
+
+  <!-- ===== LEFT: video + subtitle ===== -->
+  <!-- video player -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="150" width="620" height="349" rx="10" fill="#000"/>
+  </g>
+  <g clip-path="url(#vidClip)">
+    <rect x="40" y="150" width="620" height="349" fill="#0f1a24"/>
+    <circle cx="350" cy="324" r="42" fill="#fff" fill-opacity="0.92"/>
+    <path d="M338 302 L338 346 L372 324 Z" fill="#FE7F2D"/>
+    <!-- caption overlay -->
+    <rect x="40" y="452" width="620" height="47" fill="#000" fill-opacity="0.55"/>
+    <text x="350" y="482" font-size="16" fill="#fff" text-anchor="middle" font-weight="600">Ma mère met de grands espoirs sur mes épaules.</text>
+  </g>
+
+  <!-- subtitle panel -->
+  <text x="40" y="533" font-size="15" fill="#233D4D" font-weight="700">中法字幕 · 点击跳转</text>
+  <g filter="url(#shadow)">
+    <rect x="40" y="548" width="620" height="140" rx="10" fill="#fff"/>
+  </g>
+  <!-- active subtitle line -->
+  <rect x="40" y="548" width="620" height="46" rx="10" fill="#FFF3E8"/>
+  <rect x="40" y="548" width="4" height="46" fill="#FE7F2D"/>
+  <text x="60" y="571" font-size="14.5" fill="#233D4D" font-weight="600">Ma mère met de grands espoirs sur mes épaules.</text>
+  <text x="60" y="587" font-size="12.5" fill="#8B6B4F">我妈把天大的期望压在我肩上。</text>
+  <text x="628" y="571" font-size="11" fill="#FE7F2D" text-anchor="end" font-weight="700">0:04</text>
+
+  <text x="60" y="620" font-size="14" fill="#4A5C68">Je suis bonne à rien, paraît-il.</text>
+  <text x="60" y="636" font-size="12" fill="#9AA7B0">听说我一无是处。</text>
+  <text x="628" y="620" font-size="11" fill="#B8C2CA" text-anchor="end">0:11</text>
+
+  <text x="60" y="668" font-size="14" fill="#4A5C68">Elle a les yeux rivés sur le concours.</text>
+  <text x="60" y="684" font-size="12" fill="#9AA7B0">她死死盯着那场比赛。</text>
+  <text x="628" y="668" font-size="11" fill="#B8C2CA" text-anchor="end">0:23</text>
+
+  <!-- ===== RIGHT: native expressions list ===== -->
+  <text x="692" y="123" font-size="15" fill="#233D4D" font-weight="700">地道表达 · 按视频顺序</text>
+  <rect x="1088" y="107" width="152" height="26" rx="13" fill="#233D4D"/>
+  <text x="1164" y="124" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600">🎴 背 B1+ 单词</text>
+
+  <!-- card 1 -->
+  <g filter="url(#shadow)">
+    <rect x="692" y="150" width="548" height="104" rx="10" fill="#fff"/>
+  </g>
+  <rect x="692" y="150" width="5" height="104" rx="2" fill="url(#accent)"/>
+  <text x="714" y="180" font-size="18" fill="#233D4D" font-weight="700">être bonne à rien</text>
+  <rect x="905" y="165" width="40" height="20" rx="10" fill="#FFE3CC"/>
+  <text x="925" y="179" font-size="11" fill="#C85A17" text-anchor="middle" font-weight="700">B1</text>
+  <text x="714" y="203" font-size="13.5" fill="#5B6B76">一无是处、什么都做不好 —— 带自嘲/被否定的口吻</text>
+  <text x="714" y="228" font-size="12.5" fill="#8899A3" font-style="italic">« Je suis bonne à rien, paraît-il. »</text>
+  <rect x="1180" y="216" width="48" height="20" rx="10" fill="#FFF3E8"/>
+  <text x="1204" y="230" font-size="11" fill="#FE7F2D" text-anchor="middle" font-weight="700">▶ 0:11</text>
+
+  <!-- card 2 -->
+  <g filter="url(#shadow)">
+    <rect x="692" y="266" width="548" height="104" rx="10" fill="#fff"/>
+  </g>
+  <rect x="692" y="266" width="5" height="104" rx="2" fill="url(#accent)"/>
+  <text x="714" y="296" font-size="18" fill="#233D4D" font-weight="700">avoir les yeux rivés sur</text>
+  <rect x="1010" y="281" width="40" height="20" rx="10" fill="#DDEBF3"/>
+  <text x="1030" y="295" font-size="11" fill="#2C6E9B" text-anchor="middle" font-weight="700">B2</text>
+  <text x="714" y="319" font-size="13.5" fill="#5B6B76">目不转睛盯着 —— rivé 本义"铆钉"，形象地道</text>
+  <text x="714" y="344" font-size="12.5" fill="#8899A3" font-style="italic">« Elle a les yeux rivés sur le concours. »</text>
+  <rect x="1180" y="332" width="48" height="20" rx="10" fill="#FFF3E8"/>
+  <text x="1204" y="346" font-size="11" fill="#FE7F2D" text-anchor="middle" font-weight="700">▶ 0:23</text>
+
+  <!-- card 3 -->
+  <g filter="url(#shadow)">
+    <rect x="692" y="382" width="548" height="104" rx="10" fill="#fff"/>
+  </g>
+  <rect x="692" y="382" width="5" height="104" rx="2" fill="url(#accent)"/>
+  <text x="714" y="412" font-size="18" fill="#233D4D" font-weight="700">péter les plombs</text>
+  <rect x="905" y="397" width="40" height="20" rx="10" fill="#DDEBF3"/>
+  <text x="925" y="411" font-size="11" fill="#2C6E9B" text-anchor="middle" font-weight="700">B2</text>
+  <text x="714" y="435" font-size="13.5" fill="#5B6B76">突然抓狂、情绪爆炸 —— 字面"烧断保险丝"</text>
+  <text x="714" y="460" font-size="12.5" fill="#8899A3" font-style="italic">« Ma mère a pété les plombs ce jour-là. »</text>
+  <rect x="1180" y="448" width="48" height="20" rx="10" fill="#FFF3E8"/>
+  <text x="1204" y="462" font-size="11" fill="#FE7F2D" text-anchor="middle" font-weight="700">▶ 1:47</text>
+
+  <!-- flashcard peek -->
+  <g filter="url(#shadow)">
+    <rect x="692" y="498" width="548" height="190" rx="10" fill="#233D4D"/>
+  </g>
+  <text x="966" y="533" font-size="12.5" fill="#7FA8C2" text-anchor="middle" font-weight="600">单词闪卡 · B1+ 自动填充 · 第 7 / 72</text>
+  <text x="966" y="588" font-size="34" fill="#fff" text-anchor="middle" font-weight="700">assumer</text>
+  <text x="966" y="618" font-size="14" fill="#B9C7D2" text-anchor="middle">坦然承担 / 接受（法语神词，英语无对应）</text>
+  <rect x="746" y="642" width="200" height="34" rx="17" fill="#3A5566"/>
+  <text x="846" y="664" font-size="13" fill="#DCE5EB" text-anchor="middle">不认识 ↻</text>
+  <rect x="986" y="642" width="200" height="34" rx="17" fill="url(#accent)"/>
+  <text x="1086" y="664" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">认识 ✓</text>
+</svg>
