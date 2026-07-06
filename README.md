@@ -4,6 +4,10 @@
 > **"native French expressions"** learning webpage — with a synced video player,
 > click-to-jump example timestamps, and an auto-filled B1+ vocabulary flashcard deck.
 
+![French YouTube Lab preview](assets/preview.svg)
+
+<sub>Preview of a generated page: synced player · bilingual subtitles · CEFR-tagged native expressions · click-to-jump timestamps · B1+ flashcards.</sub>
+
 This is an **agent skill** (for Codebuddy / Claude Code style coding agents). Point it at a
 French YouTube URL and it produces a single `french-lab-<id>.html` you can open in a browser.
 
@@ -86,11 +90,17 @@ french-youtube-lab/
 │   ├── merge_sentences.py       # segments → sentences
 │   ├── snap_timestamps.py       # ★ align examples to real subtitle times
 │   └── build_html.py            # fill template → final HTML
+├── examples/                    # 3 ready-made demo pages (see examples/README.md)
 └── references/
     ├── embed-stability.md       # YouTube 153 / bot-challenge: causes & fixes
     ├── idiom-analysis.md        # how to pick & explain native expressions
     └── cefr-guidelines.md       # B1+ vocabulary selection
 ```
+
+## Examples
+
+Three ready-made pages live in [`examples/`](examples/) — a flagship human-subtitle video, a 9:16
+Shorts, and a noisy-auto-caption case. See [`examples/README.md`](examples/README.md) for details.
 
 ## The three iron rules
 
