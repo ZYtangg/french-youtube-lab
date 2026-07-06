@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地道法语表达实验室 — Ma mère met de grands espoirs sur mes épaules</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --surface: #EAECF0;
+    --card: #FFFFFF;
+    --border: #EAECF0;
+    --border-hover: #FE7F2D;
+    --border-active: #FE7F2D;
+    --accent: #FE7F2D;
+    --accent-light: rgba(254, 127, 45, 0.08);
+    --text: #000000;
+    --text-secondary: #233D4D;
+    --text-tertiary: #6B7D8A;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Main layout */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Grammar List — fixed compact */
+  .grammar-list {
+    flex: 0 1 300px;
+    min-width: 220px;
+    border-right: 0.5px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .grammar-list-header {
+    padding: 20px 24px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .grammar-section-header {
+    padding: 16px 24px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    border-top: 1.5px solid var(--accent);
+    margin: 12px 16px 0;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  .grammar-list-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px 20px;
+  }
+
+  .grammar-list-items::-webkit-scrollbar {
+    width: 4px;
+  }
+  .grammar-list-items::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .grammar-list-items::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Grammar List Item */
+  .grammar-item {
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.18s ease-out;
+    margin-bottom: 8px;
+    border: 0.5px solid transparent;
+    background: transparent;
+  }
+
+  .grammar-item:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .grammar-item.active {
+    background: var(--card);
+    border-color: var(--border-active);
+  }
+  .grammar-item.active::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .grammar-item .name-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+    padding-right: 52px;
+  }
+
+  .grammar-item .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.35;
+  }
+
+  .grammar-item .cefr-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--border);
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .grammar-item.active .cefr-badge {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .grammar-item .meaning {
+    font-size: 12px;
+    color: var(--text-secondary);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    padding-right: 52px;
+  }
+
+  .grammar-item .pill {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 11px;
+    background: var(--surface);
+    font-size: 11px;
+    color: var(--text-secondary);
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    white-space: nowrap;
+  }
+
+  .grammar-item.active .pill {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .grammar-item:first-child .pill::after {
+    content: " · TOP1";
+  }
+
+  /* ── Slang items — distinct visual style ── */
+  #slangList .grammar-item {
+    border-left: 3px solid transparent;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: transparent;
+  }
+  #slangList .grammar-item:hover {
+    background: rgba(254, 127, 45, 0.04);
+  }
+  #slangList .grammar-item.active {
+    background: var(--card);
+    border-color: var(--border-active);
+    border-left-color: var(--accent);
+    border-left-width: 3px;
+  }
+  #slangList .grammar-item.active::before {
+    content: none; /* remove the inner bar — left-border serves this purpose */
+  }
+  #slangList .grammar-item .pill {
+    background: rgba(254, 127, 45, 0.06);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 500;
+  }
+  #slangList .grammar-item.active .pill {
+    background: var(--accent-light);
+  }
+
+  /* Learning Space — 65% */
+  .learning-space {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 24px 32px 0;
+  }
+
+  .grammar-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+
+  .grammar-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .freq-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 12px;
+    border-radius: 12px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .cefr-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 16px 0;
+    flex-shrink: 0;
+  }
+
+  .explanation {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--surface);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  /* Bottom area: examples + video */
+  .content-area {
+    display: flex;
+    flex: 1;
+    gap: 28px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .examples-col {
+    flex: 0 0 40%;
+    min-width: 280px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  .examples-col::-webkit-scrollbar {
+    width: 4px;
+  }
+  .examples-col::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .examples-col::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .example-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border);
+    margin-bottom: 10px;
+    transition: all 0.12s ease;
+    cursor: pointer;
+  }
+
+  .example-card:hover {
+    background: var(--accent-light);
+  }
+
+  .example-card.playing {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  .example-card .fr {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .example-card.playing .fr { color: var(--accent); }
+
+  .example-card .zh {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .example-card.playing .zh { color: var(--accent); }
+
+  .timestamp {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 6px;
+    cursor: pointer;
+    transition: color 0.12s;
+  }
+  .timestamp:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+  .example-card.playing .timestamp {
+    color: var(--accent);
+  }
+
+  /* Video column */
+  .video-col {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    align-self: stretch;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .video-wrapper iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+  }
+
+  /* Subtitle panel */
+  .subtitle-panel {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 12px;
+    padding-right: 4px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .subtitle-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+  .subtitle-panel::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .subtitle-line {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-left: 3px solid transparent;
+  }
+  .subtitle-line:hover {
+    background: var(--surface);
+  }
+  .subtitle-line.active {
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+  }
+  .subtitle-line .sub-fr {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .subtitle-line .sub-zh {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .subtitle-line .sub-time {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Wordbook button — below subtitle panel */
+  .wordbook-btn {
+    display: block;
+    width: 33%;
+    align-self: flex-end;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font);
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .wordbook-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(254, 127, 45, 0.3);
+  }
+
+  /* Wordbook panel */
+  .wordbook-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .wordbook-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .wordbook-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100vh;
+    background: var(--bg);
+    border-left: 0.5px solid var(--border);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 40px rgba(0,0,0,0.08);
+  }
+  .wordbook-panel.open {
+    transform: translateX(0);
+  }
+
+  .wordbook-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .wordbook-header h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .wordbook-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+    transition: background 0.12s;
+  }
+  .wordbook-close:hover { background: var(--border); }
+
+  .wordbook-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    overflow: hidden;
+  }
+
+  .wordbook-progress {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .wordbook-progress .bar-track {
+    width: 160px;
+    height: 3px;
+    background: var(--surface);
+    border-radius: 2px;
+    margin: 8px auto 0;
+    overflow: hidden;
+  }
+  .wordbook-progress .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .flashcard {
+    width: 100%;
+    min-height: 200px;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 40px 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+  }
+  /* When switching cards, disable transitions to avoid brief flash of new answer */
+  .flashcard.switching,
+  .flashcard.switching .back,
+  .flashcard.switching .example-hint,
+  .flashcard.switching .front {
+    transition: none !important;
+  }
+  .flashcard.revealed {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+  }
+  .flashcard .front {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    transition: opacity 0.15s ease;
+  }
+  .flashcard.revealed .front {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+  .flashcard .back {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.5;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .flashcard.revealed .back {
+    opacity: 1;
+    max-height: 120px;
+  }
+  .flashcard .example-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 20px;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.2s ease 0.1s;
+  }
+  .flashcard.revealed .example-hint {
+    opacity: 1;
+  }
+  .flashcard .tap-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    position: absolute;
+    bottom: 16px;
+    opacity: 0.6;
+  }
+  .flashcard.revealed .tap-hint {
+    display: none;
+  }
+
+  .wordbook-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .flashcard.revealed ~ .wordbook-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .wb-btn {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 22px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    font-family: var(--font);
+  }
+  .wb-btn.know {
+    background: var(--accent);
+    color: #fff;
+  }
+  .wb-btn.know:hover { filter: brightness(1.08); }
+  .wb-btn.review {
+    background: var(--surface);
+    color: var(--text-secondary);
+  }
+  .wb-btn.review:hover { background: var(--border); }
+
+  .wordbook-empty {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    display: none;
+  }
+  .wordbook-empty.show { display: block; }
+  .wordbook-empty .icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  /* Wordbook Add Area — at panel bottom */
+  .wordbook-add-area {
+    flex-shrink: 0;
+    border-top: 0.5px solid var(--border);
+    padding: 16px 24px;
+  }
+  .wordbook-add-row {
+    display: flex;
+    gap: 8px;
+  }
+  .wordbook-add-input {
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    padding: 0 12px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .wordbook-add-input::placeholder {
+    color: var(--text-tertiary);
+    font-size: 12px;
+  }
+  .wordbook-add-input:focus {
+    border-color: var(--accent);
+  }
+  .wordbook-add-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font);
+    white-space: nowrap;
+    transition: filter 0.12s ease;
+  }
+  .wordbook-add-btn:hover {
+    filter: brightness(1.1);
+  }
+  .wordbook-add-feedback {
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .wordbook-add-feedback.show {
+    opacity: 1;
+  }
+  .wordbook-add-feedback.success {
+    color: #2E7D32;
+  }
+  .wordbook-add-feedback.notfound {
+    color: var(--text-tertiary);
+  }
+  .wordbook-add-feedback.exists {
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">Ma mère met de grands espoirs sur mes épaules… je suis bonne à rien | Incroyable mais vrai</div>
+
+<div class="main">
+
+  <!-- Grammar List -->
+  <div class="grammar-list">
+    <div class="grammar-list-header">地道表达 · 按视频顺序</div>
+    <div class="grammar-list-items" id="grammarList"></div>
+    <div class="grammar-section-header" id="slangSectionHeader" style="display:none">口语 · 俚语 · 语气</div>
+    <div class="grammar-list-items" id="slangList"></div>
+  </div>
+
+  <!-- Learning Space -->
+  <div class="learning-space">
+    <div class="grammar-title-row">
+      <span class="grammar-title" id="grammarTitle">mettre en place</span>
+      <span class="cefr-pill" id="cefrPill">B2</span>
+      <span class="freq-pill" id="freqPill">12次出现</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="explanation" id="explanation"></div>
+
+    <div class="divider"></div>
+
+    <div class="content-area">
+      <div class="examples-col">
+        <div class="section-label">Examples</div>
+        <div id="examplesContainer"></div>
+      </div>
+
+      <div class="video-col">
+        <div class="video-toolbar" style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#EAECF0;border-radius:6px 6px 0 0;font-size:12px;color:#233D4D;">
+          <span id="ytStatusHint">正在加载视频...</span>
+          <a id="ytOpenExternal" href="https://www.youtube.com/watch?v=dkU-56i1ZCM" target="_blank" rel="noopener" style="color:#FE7F2D;text-decoration:none;font-weight:500;">↗ 在 YouTube 打开</a>
+        </div>
+        <div class="video-wrapper">
+          <div id="ytPlayer"></div>
+        </div>
+        <div class="subtitle-panel" id="subtitlePanel"></div>
+        <button class="wordbook-btn" id="wordbookBtn" onclick="toggleWordbook()">背 B1+ 单词</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Wordbook Overlay -->
+<div class="wordbook-overlay" id="wordbookOverlay" onclick="toggleWordbook()"></div>
+
+<!-- Wordbook Panel -->
+<div class="wordbook-panel" id="wordbookPanel">
+  <div class="wordbook-header">
+    <h2>单词本</h2>
+    <button class="wordbook-close" onclick="toggleWordbook()">✕</button>
+  </div>
+  <div class="wordbook-body" id="wordbookBody">
+    <div class="wordbook-progress" id="wordbookProgress"></div>
+    <div class="flashcard" id="flashcard" onclick="revealCard()">
+      <div class="front" id="cardFront"></div>
+      <div class="back" id="cardBack"></div>
+      <div class="example-hint" id="cardExample"></div>
+      <div class="tap-hint">点击翻转</div>
+    </div>
+    <div class="wordbook-actions" id="wordbookActions">
+      <button class="wb-btn review" onclick="markWord('dontknow')">不认识</button>
+      <button class="wb-btn know" onclick="markWord('know')">认识</button>
+    </div>
+    <div class="wordbook-empty" id="wordbookEmpty">
+      <div class="icon">🎉</div>
+      <div>本视频单词已全部掌握</div>
+    </div>
+  </div>
+  <div class="wordbook-add-area">
+    <div class="wordbook-add-row">
+      <input type="text" class="wordbook-add-input" id="wordAddInput"
+             placeholder="输入视频中的法语单词…"
+             onkeydown="if(event.key==='Enter')addCustomWord()" />
+      <button class="wordbook-add-btn" onclick="addCustomWord()">添加</button>
+    </div>
+    <div class="wordbook-add-feedback" id="wordAddFeedback"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────
+const grammars = [
+  {
+    "id": 1,
+    "name": "être bon à rien / bonne à rien",
+    "level": "B1",
+    "meaning": "一无是处 · 什么都不行",
+    "freq": 2,
+    "explanation": "视频标题就用了它：「je suis bonne à rien」（我什么都不行）。这是法国人形容「废柴、干啥啥不行」最地道的固定表达，带自嘲或贬低色彩。结构是「être bon(ne) à + rien」。反过来「être bon à quelque chose」=擅长某事。注意 bon 要跟人称阴阳性配合：男生说 bon à rien，女生说 bonne à rien。片尾她说「je serais redevenue missante（打错，应为 miss + ante 的谐音玩笑）」也是同类自嘲。",
+    "examples": [
+      {
+        "fr": "Ma mère met de grands espoirs sur mes épaules sauf que je suis bonne à rien.",
+        "zh": "我妈把天大的期望压在我肩上，可我偏偏什么都不行。",
+        "time": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "avoir du mal à + inf.",
+    "level": "B1",
+    "meaning": "很难做到 · 费劲",
+    "freq": 1,
+    "explanation": "「j'ai même du mal à assumer mon prénom」= 我连接受自己的名字都很吃力。「avoir du mal à + 动词原形」是法国人表达「做某事很困难/很挣扎」的超高频说法，比生硬的「c'est difficile de」自然得多，而且强调「主语本人费劲」。近义：「j'ai du mal à comprendre」（我很难理解）、「j'ai du mal à y croire」（我难以相信）。",
+    "examples": [
+      {
+        "fr": "j'ai même du mal à assumer mon prénom Hope.",
+        "zh": "我甚至连接受自己的名字 Hope 都很费劲。",
+        "time": 8
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "assumer",
+    "level": "B2",
+    "meaning": "坦然接受 · 扛下来",
+    "freq": 1,
+    "explanation": "「assumer mon prénom」的 assumer 是法语里极其地道、却很难直译的词。它不是英语的 assume（假设），而是「坦然承担、接受并对外负责」——接受自己的选择、身份、后果，不逃避不羞愧。法国人常说「j'assume」（我认了 / 我不后悔），是一种很有态度的表达。学会用 assumer，法语一下子就地道了。",
+    "examples": [
+      {
+        "fr": "j'ai même du mal à assumer mon prénom.",
+        "zh": "我连坦然接受自己的名字都做不到。",
+        "time": 8
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "enfin (纠正/补充语气)",
+    "level": "B1",
+    "meaning": "呃…其实是 · 我是说",
+    "freq": 3,
+    "explanation": "「Enfin, pour être précise...」「Enfin, j'aurais pu si...」——这里的 enfin 不是「终于」，而是法国人边说边纠正、补充、收回前话的口头禅，相当于「呃…我是说」「其实吧」。母语者思考、修正措辞时张口就来。听懂这个 enfin，你就摸到了法式口语的脉搏。",
+    "examples": [
+      {
+        "fr": "Enfin, pour être précise, ma mère veut que je sois comme ça.",
+        "zh": "呃，准确地说，是我妈希望我是这样。",
+        "time": 8
+      },
+      {
+        "fr": "Enfin, j'aurais pu si je n'avais pas dû participer à un nouveau concours.",
+        "zh": "呃，本来可以的——要不是我还得去参加又一个比赛。",
+        "time": 183
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "venir à la rescousse",
+    "level": "B2",
+    "meaning": "前来救援 · 及时救场",
+    "freq": 1,
+    "explanation": "「les programmes de télévision sont venus à la rescousse」= 那些电视节目前来救场了。「venir / voler à la rescousse (de qqn)」= 赶来援救。rescousse 是个几乎只用在这个固定搭配里的词，带点戏剧化/幽默色彩，这里用来自嘲「电视选秀成了救命稻草」。用它能让叙事一下子生动。",
+    "examples": [
+      {
+        "fr": "les programmes de télévision pour enfants talentueux sont venus à la rescousse.",
+        "zh": "那些儿童才艺电视节目前来救场了。",
+        "time": 50
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "raide comme un balai",
+    "level": "B2",
+    "meaning": "僵硬得像根棍子",
+    "freq": 1,
+    "explanation": "地道比喻！「raide comme un balai」字面是「硬得像把扫帚」，形容人身体僵硬、不灵活（这里指跳舞很僵）。也可引申指人古板、拘谨。这类「adjectif + comme + 具体物」的比喻是法语生动口语的精髓，类似的还有「bête comme ses pieds」（蠢得像自己的脚=非常笨）、「malin comme un singe」（精得像猴）。",
+    "examples": [
+      {
+        "fr": "J'ai été expulsée de dans les stars parce que je suis raide comme un balai.",
+        "zh": "我被《舞动奇迹》淘汰了，因为我僵硬得像根棍子。",
+        "time": 70
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "faire briller les yeux (de mille feux)",
+    "level": "B2",
+    "meaning": "让眼睛发光 · 兴奋不已",
+    "freq": 2,
+    "explanation": "「Cette phrase a fait briller les yeux de maman de mille feux」= 这句话让妈妈的眼睛亮得像放烟花。「faire briller les yeux」（让某人眼睛发亮）是描写「兴奋、心动、充满期待」的地道意象。「de mille feux」（万道光芒）是固定夸张搭配，还可说「briller de mille feux」（光芒万丈）——她后面形容自己上台也用了「Je brillais de mille feux」。一个意象前后呼应，很文学。",
+    "examples": [
+      {
+        "fr": "Cette phrase a fait briller les yeux de maman de mille feux.",
+        "zh": "这句话让妈妈的眼睛亮得像放烟花。",
+        "time": 107
+      },
+      {
+        "fr": "J'avais l'impression que tous les yeux étaient rivés sur moi. Je brillais de mille feux.",
+        "zh": "我感觉所有人的目光都聚焦在我身上。我光芒万丈。",
+        "time": 385
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "faire le tour de + qqch",
+    "level": "B1",
+    "meaning": "绕一圈 · 走一遍",
+    "freq": 1,
+    "explanation": "「je devais juste faire le tour de la scène」= 我只需要在台上走一圈。「faire le tour de qqch」= 绕某物一圈 / 逛遍。faire le tour du monde（环游世界）、faire le tour du propriétaire（参观一下屋子）都是同一结构。tour 在这里是「一圈、一周」，别和「塔（la tour）」搞混——它是阳性 le tour。",
+    "examples": [
+      {
+        "fr": "je devais juste faire le tour de la scène.",
+        "zh": "我只需要在台上走一圈。",
+        "time": 117
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "trop fastoche",
+    "level": "B2",
+    "meaning": "太简单啦（俚语）",
+    "freq": 1,
+    "explanation": "「trop fastoche」（视频里拼作 fastche）= 太简单了。「fastoche」是「facile」的俏皮口语变体，带孩子气/轻松感，年轻人常用。前面加「trop」（=「超级」，口语里替代 très）更地道：trop bien（超棒）、trop cool（太酷）。注意 trop 这个「口语强调用法」在书面语里是不规范的，但口语无处不在。",
+    "examples": [
+      {
+        "fr": "Donne-moi un podium et je fais ça quand tu veux. Trop fastoche.",
+        "zh": "给我一个 T 台，你随时叫我我都能走。太简单啦。",
+        "time": 128
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "ma chérie / ma puce / ma fille",
+    "level": "A2",
+    "meaning": "亲爱的 · 小宝贝（昵称）",
+    "freq": 3,
+    "explanation": "妈妈连用了三个昵称：「ma chérie」（我的宝贝）、「ma puce」（字面「我的小跳蚤」=对小孩/女孩的爱称，超地道）、「ma fille」（我的女儿，也可泛用作亲昵称呼）。法国人对亲近的人极爱用这类昵称，puce 尤其地道且难直译。这段还用昵称制造反讽——嘴上叫「小宝贝」，实则句句在控制。",
+    "examples": [
+      {
+        "fr": "ma chérie, tu ne rentreras pas dans ta robe.",
+        "zh": "亲爱的，你会穿不进裙子的。",
+        "time": 142
+      },
+      {
+        "fr": "tu as besoin de passer plus de temps à te préparer, ma puce.",
+        "zh": "你需要花更多时间准备，我的小宝贝。",
+        "time": 150
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "vouloir contrôler ta vie + comparatif 反讽",
+    "level": "B1",
+    "meaning": "越发想掌控（反讽用法）",
+    "freq": 1,
+    "explanation": "「je veux contrôler ta vie encore plus」= 我想更进一步地掌控你的生活。妙在叙述者把妈妈没明说的潜台词直接「翻译」出来，制造黑色幽默。「encore plus」（更加、还要更）是口语强调比较级的地道方式。这种「替对方说出真实动机」的叙事手法，是这个视频幽默感的来源。",
+    "examples": [
+      {
+        "fr": "je ne pouvais même pas communiquer avec des amis parce que ma fille, je veux contrôler ta vie encore plus.",
+        "zh": "我甚至不能跟朋友联系，因为「我的女儿，我想更进一步地掌控你的生活」。",
+        "time": 150
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "s'éclater",
+    "level": "B2",
+    "meaning": "玩得超嗨 · 尽兴",
+    "freq": 1,
+    "explanation": "「passer la journée avec des amis et m'éclater」= 和朋友待一整天、玩个尽兴。「s'éclater」是法国人表达「玩得非常开心、尽情享受」的高频俚语，字面「把自己炸开」，程度远超「s'amuser」。同类还有「c'était éclatant」。派对、旅行、聚会必备词。",
+    "examples": [
+      {
+        "fr": "Je pouvais passer la journée avec des amis et m'éclater.",
+        "zh": "我可以整天和朋友待在一起，尽情玩耍。",
+        "time": 179
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "péter les plombs",
+    "level": "B2",
+    "meaning": "抓狂 · 情绪爆炸",
+    "freq": 1,
+    "explanation": "「ma mère a pété les plombs」= 我妈抓狂了/失控了。这是法国人形容「气到爆炸、情绪失控」最地道的俚语，字面是「烧断了保险丝」（plomb=保险丝）。比「s'énerver」（生气）强烈得多，程度接近「气疯了」。同义地道说法：「péter un câble」「péter une durite」。日常对话、影视里高频出现。",
+    "examples": [
+      {
+        "fr": "Je voulais passer du temps dehors, mais ma mère a pété les plombs.",
+        "zh": "我想在外面待一会儿，但我妈抓狂了。",
+        "time": 183
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "bref",
+    "level": "B1",
+    "meaning": "总之 · 长话短说",
+    "freq": 1,
+    "explanation": "「Bref, je me sentais comme une enfant」= 总之，我感觉自己又像个孩子。「bref」是法国人结束一段啰嗦描述、跳到重点的万能收束词，相当于「反正、总之」。法国还有部神剧就叫《Bref》。日常对话里几乎每隔几句就有人说 bref。",
+    "examples": [
+      {
+        "fr": "Bref, je me sentais comme une enfant, ce qui m'avait tellement manqué.",
+        "zh": "总之，我感觉自己又像个孩子，这种感觉我太久没有过了。",
+        "time": 231
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "avoir l'impression que...",
+    "level": "B1",
+    "meaning": "感觉好像 · 觉得",
+    "freq": 3,
+    "explanation": "「j'ai tout de suite eu l'impression que nous allions trop vite」「j'avais l'impression que tous les yeux étaient rivés sur moi」——「avoir l'impression que + 从句」是法国人表达「我(主观)感觉/觉得好像」最自然的说法，比「je pense que」更强调直觉和感受，且不一定是事实。这是叙事和表达情绪时的万能句式，务必掌握。",
+    "examples": [
+      {
+        "fr": "j'ai tout de suite eu l'impression que nous allions beaucoup trop vite.",
+        "zh": "我立刻就感觉我们滑得太快了。",
+        "time": 239
+      },
+      {
+        "fr": "J'avais l'impression que tous les yeux étaient rivés sur moi.",
+        "zh": "我感觉所有人的目光都聚焦在我身上。",
+        "time": 385
+      },
+      {
+        "fr": "Il me semblait qu'elle était tout simplement désemparée.",
+        "zh": "我觉得她整个人都不知所措了。",
+        "time": 302
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "éclater de rire",
+    "level": "B1",
+    "meaning": "哄堂大笑 · 笑翻",
+    "freq": 1,
+    "explanation": "「on a tous éclaté de rire」= 我们全都笑翻了。「éclater de rire」（笑得「爆开」）是「突然大笑、忍不住笑出来」的地道固定搭配，比「rire」生动。同系列：éclater en sanglots（突然大哭）、éclater de colère（勃然大怒）——éclater 一词精准传达「情绪瞬间爆发」。",
+    "examples": [
+      {
+        "fr": "On s'est regardé les uns les autres et on a tous éclaté de rire.",
+        "zh": "我们你看看我我看看你，然后全都笑翻了。",
+        "time": 247
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "fin de la discussion",
+    "level": "B1",
+    "meaning": "没得商量 · 讨论结束",
+    "freq": 1,
+    "explanation": "「Nous participer au concours demain, fin de la discussion.」=我们明天参加比赛，没得商量。「fin de la discussion」（讨论到此为止）是斩钉截铁下结论、不容反驳的地道说法，相当于中文「就这么定了 / 没得商量」。近义「point final」「c'est comme ça et pas autrement」。",
+    "examples": [
+      {
+        "fr": "j'ai annoncé à ma mère : Nous participons au concours demain, fin de la discussion.",
+        "zh": "我向妈妈宣布：我们明天参加比赛，没得商量。",
+        "time": 330
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "être inarrêtable",
+    "level": "B2",
+    "meaning": "势不可挡 · 拦不住",
+    "freq": 1,
+    "explanation": "「Mais j'étais inarrêtable」= 但我势不可挡。「inarrêtable」（无法被阻止的）是很有力量感的形容词，用来形容人下定决心、谁也拦不住。这类「in- + 动词 + -able」（不可…的）构词法产出大量地道词：incontournable（绕不开的）、imprévisible（无法预料的）、intenable（守不住的）。掌握构词法能举一反三。",
+    "examples": [
+      {
+        "fr": "elle était sceptique et super inquiète pour ma jambe. Mais j'étais inarrêtable.",
+        "zh": "她心存疑虑，也特别担心我的腿。但我势不可挡。",
+        "time": 330
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "n'est-ce pas ironique ?",
+    "level": "B1",
+    "meaning": "是不是很讽刺？",
+    "freq": 1,
+    "explanation": "「j'ai chanté une chanson sur l'hiver, n'est-ce pas ironique ?」——「n'est-ce pas + 形容词 ?」是法国人拉近距离、征求共鸣的地道反问。这里她腿受伤还唱冬天的歌，自嘲很讽刺。「n'est-ce pas ?」单用=「对吧？/不是吗？」是法语最典型的附加疑问，口语里到处都是。",
+    "examples": [
+      {
+        "fr": "j'ai chanté une chanson joyeuse sur l'hiver, n'est-ce pas ironique ?",
+        "zh": "我唱了一首关于冬天的欢快歌曲，是不是很讽刺？",
+        "time": 367
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "avoir les yeux rivés sur",
+    "level": "B2",
+    "meaning": "目不转睛盯着",
+    "freq": 1,
+    "explanation": "「tous les yeux étaient rivés sur moi」= 所有目光都死死盯着我。「river les yeux sur」（把眼睛「铆钉/焊」在某处）是形容「目不转睛、紧盯」的地道文学化表达，river 本义是「铆接」，画面感极强。比普通的「regarder」高级得多，写作和口语都加分。",
+    "examples": [
+      {
+        "fr": "J'avais l'impression que tous les yeux étaient rivés sur moi.",
+        "zh": "我感觉所有人的目光都死死盯在我身上。",
+        "time": 385
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "parvenir à un compromis",
+    "level": "B2",
+    "meaning": "达成妥协 · 找到折中",
+    "freq": 1,
+    "explanation": "「nous sommes parvenus à un compromis」= 我们达成了一个妥协。「parvenir à + 名词/inf.」= (努力后)成功达到，比「arriver à」更书面、更强调「历经过程终于做到」。搭配 compromis（妥协）、accord（协议）、résultat（结果）都很地道。结尾还用了「on s'est mise d'accord pour...」（我们达成一致要…），也是超实用的「协商」表达。",
+    "examples": [
+      {
+        "fr": "Ensuite, nous avons discuté et sommes parvenus à un compromis.",
+        "zh": "之后我们聊了聊，达成了一个妥协。",
+        "time": 416
+      },
+      {
+        "fr": "On s'est mise d'accord pour trouver un équilibre.",
+        "zh": "我们达成一致，要找到一个平衡点。",
+        "time": 426
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "se prendre en main",
+    "level": "B2",
+    "meaning": "自己掌控 · 振作起来",
+    "freq": 1,
+    "explanation": "「je n'aurais pas pu me prendre en main」= 我就没法真正掌控自己/振作起来。「se prendre en main」字面是「把自己握在手里」，指「主动掌控自己的人生、发奋、不再放任自流」。这是法国人谈成长、自律、改变时的高频励志表达。近义「se ressaisir」（重新振作）。",
+    "examples": [
+      {
+        "fr": "si ma mère ne m'avait pas forcé à me préparer, je n'aurais pas pu me prendre en main.",
+        "zh": "如果我妈没逼我做准备，我就没法真正掌控自己。",
+        "time": 426
+      }
+    ]
+  }
+];
+
+// Sort by frequency descending
+grammars.sort((a, b) => b.freq - a.freq);
+
+// ── SLANG & EXPRESSIONS ──────────────────────
+// Part 2: colloquial expressions, idioms, and nuanced usage specific to this video
+const slangs = [];
+slangs.sort((a, b) => b.freq - a.freq);
+
+// ── STATE ──────────────────────────────────
+let currentGrammarId = grammars[0].id;
+let currentGrammarIsSlang = false;  // false = grammar, true = slang
+let currentPlayingTime = null;
+
+// ── RENDER ──────────────────────────────────
+function renderGrammarList() {
+  const container = document.getElementById("grammarList");
+  container.innerHTML = grammars.map(g => `
+    <div class="grammar-item ${(!currentGrammarIsSlang && g.id === currentGrammarId) ? 'active' : ''}"
+         data-id="${g.id}"
+         data-type="grammar"
+         onclick="selectGrammar(${g.id}, false)">
+      <div class="name-row">
+        <span class="name">${g.name}</span>
+        <span class="cefr-badge">${g.level}</span>
+      </div>
+      <div class="meaning">${g.meaning}</div>
+      <span class="pill">${g.freq}次</span>
+    </div>
+  `).join("");
+
+  renderSlangList();
+}
+
+function renderSlangList() {
+  const container = document.getElementById("slangList");
+  const header = document.getElementById("slangSectionHeader");
+  if (!container) return;
+  if (slangs.length === 0) {
+    container.innerHTML = "";
+    if (header) header.style.display = "none";
+    return;
+  }
+  if (header) header.style.display = "block";
+  container.innerHTML = slangs.map(g => `
+    <div class="grammar-item ${(currentGrammarIsSlang && g.id === currentGrammarId) ? 'active' : ''}"
+         data-id="${g.id}"
+         data-type="slang"
+         onclick="selectGrammar(${g.id}, true)">
+      <div class="name-row">
+        <span class="name">${g.name}</span>
+        <span class="cefr-badge">${g.level}</span>
+      </div>
+      <div class="meaning">${g.meaning}</div>
+      <span class="pill">${g.freq}次</span>
+    </div>
+  `).join("");
+}
+
+function renderLearningSpace() {
+  const source = currentGrammarIsSlang ? slangs : grammars;
+  const g = source.find(x => x.id === currentGrammarId);
+  if (!g) return;
+
+  document.getElementById("grammarTitle").textContent = g.name;
+  document.getElementById("cefrPill").textContent = g.level;
+  document.getElementById("freqPill").textContent = g.freq + "次出现";
+  document.getElementById("explanation").textContent = g.explanation;
+
+  const examplesContainer = document.getElementById("examplesContainer");
+  examplesContainer.innerHTML = g.examples.map((ex, i) => `
+    <div class="example-card ${currentPlayingTime === ex.time ? 'playing' : ''}"
+         id="ex-${g.id}-${i}"
+         onclick="seekTo(${ex.time})">
+      <div class="fr">${ex.fr}</div>
+      <div class="zh">${ex.zh}</div>
+      <span class="timestamp">▶ ${formatTime(ex.time)}</span>
+    </div>
+  `).join("");
+}
+
+function selectGrammar(id, isSlang) {
+  currentGrammarId = id;
+  currentGrammarIsSlang = !!isSlang;
+  currentPlayingTime = null;
+  renderGrammarList();
+  renderSlangList();
+  renderLearningSpace();
+}
+
+var ytPlayer = null;
+var ytPlayerReady = false;
+
+function onYouTubeIframeAPIReady() {
+  var hint = document.getElementById("ytStatusHint");
+  ytPlayer = new YT.Player("ytPlayer", {
+    videoId: "dkU-56i1ZCM",
+    playerVars: { autoplay: 0, controls: 1, modestbranding: 1, rel: 0, hl: "fr", playsinline: 1, origin: window.location.origin },
+    events: {
+      onReady: function() {
+        ytPlayerReady = true;
+        if (hint) { hint.innerHTML = "\u2705 \u89c6\u9891\u5df2\u52a0\u8f7d \u2014 \u53ef\u4ee5\u64ad\u653e\u4e86"; hint.style.color = "#2E7D32"; }
+      },
+      onError: function(e) {
+        if (hint) { hint.innerHTML = '\u26a0\ufe0f \u89c6\u9891\u52a0\u8f7d\u5931\u8d25\uff08\u9519\u8bef\u7801 ' + e.data + '\uff09\u3002\u70b9 <a href="https://www.youtube.com/watch?v=dkU-56i1ZCM" target="_blank" style="color:#FE7F2D;">\u2197 \u5728 YouTube \u6253\u5f00</a>'; hint.style.color = "#C62828"; }
+      }
+    }
+  });
+}
+(function loadYouTubeAPI() {
+  if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  }
+})();
+
+function seekTo(seconds) {
+  currentPlayingTime = seconds;
+  var seekTarget = Math.max(0, seconds - 3);
+  if (ytPlayerReady && ytPlayer && ytPlayer.seekTo) {
+    ytPlayer.seekTo(seekTarget, true);
+    if (ytPlayer.playVideo) ytPlayer.playVideo();
+  }
+  var link = document.getElementById("ytOpenExternal");
+  if (link) link.href = "https://www.youtube.com/watch?v=dkU-56i1ZCM&t=" + Math.max(0, Math.floor(seconds)) + "s";
+  renderLearningSpace();
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ":" + String(sec).padStart(2, "0");
+}
+
+// ── WORDBOOK DATA ──────────────────────────
+// Concept-level vocabulary (A2+), excluding basic A1 words and grammar function words
+const DEFAULT_VOCAB = [
+  {
+    "word": "assumer",
+    "zh": "坦然接受、承担",
+    "example": "j'ai du mal à assumer mon prénom."
+  },
+  {
+    "word": "forcer qqn à",
+    "zh": "强迫某人做",
+    "example": "ma mère m'a forcé à suivre des cours."
+  },
+  {
+    "word": "doué(e)",
+    "zh": "有天赋的",
+    "example": "ils ont compris que je n'étais pas si douée."
+  },
+  {
+    "word": "inédit",
+    "zh": "前所未有的、全新的",
+    "example": "chaque mois, un truc inédit."
+  },
+  {
+    "word": "tenter",
+    "zh": "尝试",
+    "example": "après avoir tenté une douzaine de choses."
+  },
+  {
+    "word": "s'énerver",
+    "zh": "生气、烦躁",
+    "example": "ma mère a commencé à s'énerver."
+  },
+  {
+    "word": "à la rescousse",
+    "zh": "前来救援",
+    "example": "les programmes sont venus à la rescousse."
+  },
+  {
+    "word": "un casting",
+    "zh": "选角、海选",
+    "example": "j'ai participé à un nombre infini de castings."
+  },
+  {
+    "word": "refuser / être refusé(e)",
+    "zh": "拒绝 / 被刷",
+    "example": "j'ai été refusée à The Voice."
+  },
+  {
+    "word": "expulser",
+    "zh": "驱逐、淘汰出局",
+    "example": "j'ai été expulsée de l'émission."
+  },
+  {
+    "word": "manifestement",
+    "zh": "显然",
+    "example": "manifestement je n'avais aucun talent."
+  },
+  {
+    "word": "le tournant",
+    "zh": "转折点",
+    "example": "le tournant a été l'un de ces castings."
+  },
+  {
+    "word": "avouer",
+    "zh": "承认、坦白",
+    "example": "je dois avouer que j'ai bien réussi."
+  },
+  {
+    "word": "un podium",
+    "zh": "领奖台、T台",
+    "example": "donne-moi un podium et je fais ça."
+  },
+  {
+    "word": "un concours",
+    "zh": "比赛、竞赛",
+    "example": "divers concours de beauté."
+  },
+  {
+    "word": "passionné(e)",
+    "zh": "充满热情的",
+    "example": "ma mère était beaucoup plus passionnée."
+  },
+  {
+    "word": "inquiet / inquiète",
+    "zh": "焦虑、担心的",
+    "example": "elle était si inquiète avant chaque concours."
+  },
+  {
+    "word": "nerveux / nerveuse",
+    "zh": "紧张的",
+    "example": "elle devenait nerveuse."
+  },
+  {
+    "word": "le cauchemar",
+    "zh": "噩梦",
+    "example": "chaque fois, c'était le cauchemar."
+  },
+  {
+    "word": "l'extase (f.)",
+    "zh": "狂喜、极乐",
+    "example": "le cauchemar pour moi, mais l'extase pour ma mère."
+  },
+  {
+    "word": "rayonnant(e) de bonheur",
+    "zh": "幸福得容光焕发",
+    "example": "ma mère était rayonnante de bonheur."
+  },
+  {
+    "word": "se libérer de",
+    "zh": "从…中解脱",
+    "example": "je pouvais me libérer de son entraînement."
+  },
+  {
+    "word": "l'entraînement (m.)",
+    "zh": "训练",
+    "example": "me libérer de son entraînement."
+  },
+  {
+    "word": "idiot(e)",
+    "zh": "愚蠢的",
+    "example": "un nouveau concours idiot."
+  },
+  {
+    "word": "perdre patience",
+    "zh": "失去耐心",
+    "example": "on s'est disputé et j'ai perdu patience."
+  },
+  {
+    "word": "se disputer",
+    "zh": "争吵",
+    "example": "on s'est disputé."
+  },
+  {
+    "word": "hurler",
+    "zh": "尖叫、大吼",
+    "example": "j'ai répondu en hurlant."
+  },
+  {
+    "word": "sélectionner",
+    "zh": "选拔、挑选",
+    "example": "ils vont sélectionner les participants."
+  },
+  {
+    "word": "une congère",
+    "zh": "雪堆",
+    "example": "j'ai sauté sur la congère contre la maison."
+  },
+  {
+    "word": "manquer à qqn",
+    "zh": "被某人想念",
+    "example": "mes amis me manquaient tellement."
+  },
+  {
+    "word": "une luge",
+    "zh": "雪橇（滑雪用）",
+    "example": "des descentes en luge."
+  },
+  {
+    "word": "un traîneau",
+    "zh": "雪橇（载人/载物）",
+    "example": "quelqu'un a porté un gros traîneau."
+  },
+  {
+    "word": "freiner",
+    "zh": "刹车、减速",
+    "example": "aucun moyen de freiner."
+  },
+  {
+    "word": "dévier de sa trajectoire",
+    "zh": "偏离轨道",
+    "example": "nous avons été déviés de notre trajectoire."
+  },
+  {
+    "word": "s'écraser contre",
+    "zh": "撞上、撞毁",
+    "example": "nous nous sommes écrasés contre un poteau."
+  },
+  {
+    "word": "un poteau",
+    "zh": "柱子、电线杆",
+    "example": "écrasés contre un poteau."
+  },
+  {
+    "word": "l'adrénaline (f.)",
+    "zh": "肾上腺素",
+    "example": "l'adrénaline, la liberté, le bonheur."
+  },
+  {
+    "word": "une douleur",
+    "zh": "疼痛",
+    "example": "j'ai ressenti une douleur terrible."
+  },
+  {
+    "word": "la cheville",
+    "zh": "脚踝",
+    "example": "ma cheville me faisait mal."
+  },
+  {
+    "word": "embarquer qqn",
+    "zh": "把某人载上、带走",
+    "example": "mes amis m'ont embarqué sur le traîneau."
+  },
+  {
+    "word": "filtrer",
+    "zh": "过滤、筛选",
+    "example": "je ne pouvais même pas les filtrer."
+  },
+  {
+    "word": "prévenir qqn",
+    "zh": "提前通知、告知",
+    "example": "je devais prévenir ma mère."
+  },
+  {
+    "word": "une radio",
+    "zh": "X光片",
+    "example": "on m'a fait une radio de la cheville."
+  },
+  {
+    "word": "une fracture",
+    "zh": "骨折",
+    "example": "aucune fracture n'a été détectée."
+  },
+  {
+    "word": "endommager",
+    "zh": "损坏、损伤",
+    "example": "j'avais endommagé mes ligaments."
+  },
+  {
+    "word": "les ligaments (m.)",
+    "zh": "韧带",
+    "example": "j'avais endommagé mes ligaments."
+  },
+  {
+    "word": "plâtrer / le plâtre",
+    "zh": "打石膏 / 石膏",
+    "example": "ma jambe devait être plâtrée."
+  },
+  {
+    "word": "bouleversé(e)",
+    "zh": "深受打击、心烦意乱",
+    "example": "elle n'était pas seulement bouleversée."
+  },
+  {
+    "word": "brisé(e)",
+    "zh": "崩溃的、心碎的",
+    "example": "elle était surtout brisée."
+  },
+  {
+    "word": "désemparé(e)",
+    "zh": "不知所措的",
+    "example": "elle était tout simplement désemparée."
+  },
+  {
+    "word": "coupable",
+    "zh": "内疚的、有罪的",
+    "example": "je me sentais coupable."
+  },
+  {
+    "word": "avoir honte",
+    "zh": "感到羞愧",
+    "example": "j'avais super honte."
+  },
+  {
+    "word": "se racheter",
+    "zh": "弥补、将功补过",
+    "example": "je voulais me racheter."
+  },
+  {
+    "word": "planifier",
+    "zh": "计划、筹划",
+    "example": "nous avons tout planifié."
+  },
+  {
+    "word": "ranimer",
+    "zh": "重新点燃、使复苏",
+    "example": "cela a ranimé ma mère."
+  },
+  {
+    "word": "sceptique",
+    "zh": "怀疑的、将信将疑",
+    "example": "elle était sceptique."
+  },
+  {
+    "word": "inarrêtable",
+    "zh": "势不可挡的",
+    "example": "j'étais inarrêtable."
+  },
+  {
+    "word": "retravailler",
+    "zh": "重新加工、改进",
+    "example": "nous avons retravaillé ma robe."
+  },
+  {
+    "word": "couvrir",
+    "zh": "遮盖、覆盖",
+    "example": "pour qu'elle couvre mes jambes."
+  },
+  {
+    "word": "une béquille",
+    "zh": "拐杖",
+    "example": "je suis sortie sans béquille."
+  },
+  {
+    "word": "attirer l'attention",
+    "zh": "吸引注意",
+    "example": "cela a attiré l'attention sur moi."
+  },
+  {
+    "word": "ironique",
+    "zh": "讽刺的",
+    "example": "n'est-ce pas ironique ?"
+  },
+  {
+    "word": "un défilé",
+    "zh": "走秀、游行",
+    "example": "lors du défilé final."
+  },
+  {
+    "word": "être rivé(e) sur",
+    "zh": "目不转睛盯着",
+    "example": "tous les yeux étaient rivés sur moi."
+  },
+  {
+    "word": "à l'aise",
+    "zh": "自在的、从容的",
+    "example": "aussi légère et à l'aise sur scène."
+  },
+  {
+    "word": "décerner un prix",
+    "zh": "颁发奖项",
+    "example": "on m'a décerné le prix du public."
+  },
+  {
+    "word": "une standing ovation",
+    "zh": "全场起立鼓掌",
+    "example": "j'ai eu une standing ovation."
+  },
+  {
+    "word": "une couronne",
+    "zh": "王冠、后冠",
+    "example": "je n'avais pas besoin de cette couronne."
+  },
+  {
+    "word": "un compromis",
+    "zh": "妥协、折中",
+    "example": "sommes parvenus à un compromis."
+  },
+  {
+    "word": "un équilibre",
+    "zh": "平衡",
+    "example": "trouver un équilibre."
+  },
+  {
+    "word": "se prendre en main",
+    "zh": "掌控自己、振作",
+    "example": "je n'aurais pas pu me prendre en main."
+  },
+  {
+    "word": "obliger qqn à",
+    "zh": "迫使某人",
+    "example": "tes parents t'obligeaient à le faire ?"
+  }
+];
+
+function loadVocab() {
+  try {
+    var raw = localStorage.getItem("frenchlab_vocab");
+    if (raw) { var arr = JSON.parse(raw); if (arr.length) return arr; }
+  } catch (e) {}
+  // deep-copy defaults so mutations don't affect DEFAULT_VOCAB
+  return JSON.parse(JSON.stringify(DEFAULT_VOCAB));
+}
+
+function saveVocab() {
+  localStorage.setItem("frenchlab_vocab", JSON.stringify(vocabList));
+}
+
+function loadLearned() {
+  try {
+    var raw = localStorage.getItem("frenchlab_learned");
+    if (raw) return new Set(JSON.parse(raw));
+  } catch (e) {}
+  return new Set();
+}
+
+function saveLearned() {
+  localStorage.setItem("frenchlab_learned", JSON.stringify(Array.from(wordbookLearned)));
+}
+
+var vocabList = loadVocab();
+
+// ── SUBTITLE CORPUS ──────────────────────
+// Full transcript lines for word search
+const subtitleCorpus = [
+  {
+    "fr": "tout le monde, je m'appelle Hope, je chante comme Mil Cyrus, je danse comme Lady Gaga et je suis plus jolie que Kendal Genè.",
+    "zh": "大家好，我叫 Hope，我唱歌像 Miley Cyrus，跳舞像 Lady Gaga，而且比 Kendall Jenner 还漂亮。",
+    "time": 0
+  },
+  {
+    "fr": "Enfin, pour être précise, ma mère veut que je sois comme ça. En réalité, j'ai même du mal à assumer mon prénom Hope, c'est-à-dire espoir en anglais. Dès l'âge de 5 ans, ma mère m'a forcé à",
+    "zh": "呃，准确地说，是我妈希望我是这样。事实上，我连接受自己的名字都很难——Hope，在英语里是「希望」的意思。从我 5 岁起，妈妈就逼我",
+    "time": 8
+  },
+  {
+    "fr": "suivre toutes sortes de cours pour essayer de trouver mon talent et faire de moi une star. Mais après quelques semaines de cours, surprise, ils ont compris que je n'étais pas si doué que",
+    "zh": "去上各种各样的课，想找出我的天赋，把我打造成明星。但上了几周课后，意外来了，他们发现我并没那么有天赋，",
+    "time": 18
+  },
+  {
+    "fr": "ça et ma mère m'a fait passer d'une classe à une autre et encore une nouvelle, chaque mois, un truc inédit.",
+    "zh": "于是妈妈就让我从一个班换到另一个班，再换一个新的，每个月都换，每次都是新花样。",
+    "time": 27
+  },
+  {
+    "fr": "Voici une brève liste de ce que j'ai fait jusqu'à mes 14 ans. Danse, musique, peinture, gymnastique, chant, un peu de patinage artistique, environ 2 mois de théâtre et beaucoup d'autres choses.",
+    "zh": "这是我到 14 岁为止做过的事情的简短清单：跳舞、音乐、绘画、体操、唱歌、一点花样滑冰、大约 2 个月的戏剧，还有很多其他的。",
+    "time": 33
+  },
+  {
+    "fr": "J'aurais peut-être pu réussir quelque chose si ma mère avait été un peu plus patiente.",
+    "zh": "要是我妈能再耐心一点，也许我本来能在某件事上做出点成绩。",
+    "time": 45
+  },
+  {
+    "fr": "Après avoir tenté une douzaine de choses différentes, ma mère a commencé à s'énerver. Mais c'est à peu près à ce moment-là que les programmes de télévision pour enfants talentueux sont",
+    "zh": "在尝试了十几样不同的东西之后，妈妈开始烦躁了。但差不多就在那个时候，那些儿童才艺电视节目",
+    "time": 50
+  },
+  {
+    "fr": "venus à la rescousse. Ma mère a alors eu un nouvel espoir que son grand espoir, moi donc Groupe, puisse devenir une vraie star. À partir de ce moment, j'ai participé à un nombre infini de casting.",
+    "zh": "前来救场了。妈妈于是又燃起了新希望——她那个天大的希望，也就是我，能变成一个真正的明星。从那时起，我参加了数不清的海选。",
+    "time": 59
+  },
+  {
+    "fr": "Mais j'ai été refusée à The Voice parce que je ne chantais pas assez bien. J'ai été expulsée de dans les stars parce que je suis raide comme un balai et ils ne m'ont même pas emmené à celui",
+    "zh": "但我在《好声音》被刷了，因为我唱得不够好。我被《舞动奇迹》淘汰了，因为我僵硬得像根棍子，他们甚至没带我去参加《达人秀》，",
+    "time": 70
+  },
+  {
+    "fr": "d'incroyable talent parce que manifestement je n'avais vraiment aucun talent. À un moment donné, je me suis mise à penser qu'il fallait peut-être que je change mon nom pour Hlace sans",
+    "zh": "因为我显然真的毫无才艺可言。有那么一刻，我甚至开始想，也许我该把名字改成「Hopeless（没有希望）」，",
+    "time": 79
+  },
+  {
+    "fr": "espoir. Ça a l'air horrible. Mais le message aurait au moins été clair tout de suite. Pas d'attente, pas de mauvaise surprise. Le tournant a été l'un de ces castings. Honnêtement, je ne me souviens",
+    "zh": "这听起来很糟，但至少信息一下子就清楚了：没有期待，就没有失望。转折点出现在其中一场海选上。老实说，我",
+    "time": 88
+  },
+  {
+    "fr": "même plus pourquoi c'était. Tout ce dont je me rappelle, c'est que j'ai été refusée une fois de plus. Mais ils ont aussi dit, elle devrait d'abord aller à l'école de mankina. Oh ! Cette phrase a",
+    "zh": "都不记得那是什么比赛了。我唯一记得的是，我又一次被刷了。但他们还说，她应该先去上模特学校。哦！这句话",
+    "time": 98
+  },
+  {
+    "fr": "fait briller les yeux de maman de mil feux. Hop ! C'est exactement ce qu'il te faut. Et dès le lendemain, j'ai rencontré de nouvelles personnes d'une école de mankina. Je dois avouer que",
+    "zh": "让妈妈的眼睛瞬间亮得像放烟花。「Hope！这正是你需要的！」第二天，我就认识了一家模特学校的新朋友。我得承认，",
+    "time": 107
+  },
+  {
+    "fr": "j'ai très bien réussi parce que hello, je devais juste faire le tour de la scène. Tu as vu ce que je faisais avant ? [rires] Et maintenant, j'avais juste besoin de marcher correctement. Donne-moi un",
+    "zh": "我做得非常好，因为拜托，我只需要在台上走一圈就行。你看过我之前干的那些吗？（笑）现在我只需要好好走路就够了。给我一个",
+    "time": 117
+  },
+  {
+    "fr": "podium et je fais ça quand tu veux. trop fastche. Rapidement, j'ai commencé à participer à divers concours de beauté et j'aimais bien ça. Plus précisément, j'aimais l'attention que je recevais à",
+    "zh": "T 台，你随时叫我我都能走。太简单了。很快我就开始参加各种选美比赛，我还挺喜欢的。更确切地说，我喜欢比赛之后",
+    "time": 128
+  },
+  {
+    "fr": "l'école après ces compétitions. Ma mère était beaucoup plus passionnée. Elle était si inquiète avant chaque concours.",
+    "zh": "在学校受到的关注。我妈可比我热情多了。每次比赛前她都特别焦虑。",
+    "time": 137
+  },
+  {
+    "fr": "Une semaine avant le spectacle, elle devenait nerveuse. Je n'avais plus le droit de manger de chocolat parce que ma chérie, tu ne rentreras pas dans ta robe. Je ne pouvais pas aller me",
+    "zh": "演出前一周，她就开始紧张。我不许再吃巧克力，因为「亲爱的，你会穿不进裙子的」。我也不能出去",
+    "time": 142
+  },
+  {
+    "fr": "promener parce que tu as besoin de passer plus de temps à te préparer, ma puce. Et je ne pouvais même pas communiquer avec des amis parce que ma fille, je veux contrôler ta vie encore",
+    "zh": "散步，因为「你需要花更多时间准备，我的小宝贝」。我甚至不能跟朋友联系，因为「我的女儿，我想更进一步地",
+    "time": 150
+  },
+  {
+    "fr": "plus. Chaque fois, c'était le cauchemar.",
+    "zh": "掌控你的生活」。每一次，都是噩梦。",
+    "time": 158
+  },
+  {
+    "fr": "Le cauchemar pour moi, mais l'extase pour ma mère. C'était étrange parce qu'en 2 ans, je n'avais même pas gagné un seul concours. Je n'étais qu'une fille qui était pas mal. Mais après",
+    "zh": "对我来说是噩梦，对我妈来说却是狂喜。很奇怪，因为两年里我一个比赛都没赢过。我只是个还算可以的女孩。但每场",
+    "time": 160
+  },
+  {
+    "fr": "chaque concours, ma mère était rayonnante de bonheur et pendant quelques semaines, je pouvais me libérer de son entraînement. La fin d'année est arrivée et j'étais enfin en vacances de",
+    "zh": "比赛之后，妈妈都幸福得容光焕发，而接下来的几个星期，我能从她的训练里解脱出来。年底到了，我终于放",
+    "time": 170
+  },
+  {
+    "fr": "Noël. Quel bonheur ! Je pouvais passer la journée avec des amis et m'éclater.",
+    "zh": "圣诞假了。多幸福啊！我可以整天和朋友们待在一起，尽情玩耍。",
+    "time": 179
+  },
+  {
+    "fr": "Enfin, j'aurais pu si je n'avais pas encore dû participer à un nouveau concours idiot. Je voulais passer du temps dehors, mais ma mère a pété les plombs. Je ne pouvais littéralement rien",
+    "zh": "呃，本来可以的——如果我不用再去参加又一个愚蠢的比赛的话。我想在外面待一会儿，但我妈抓狂了。我简直什么都",
+    "time": 183
+  },
+  {
+    "fr": "faire. On s'est disputé et j'ai perdu patience. Ma mère a crié cette fois, tout est différent. C'est une compétition très importante. Ils vont sélectionner les participants pour Miss",
+    "zh": "干不了。我们吵了一架，我失去了耐心。妈妈这次喊道，这次不一样，这是一场非常重要的比赛。他们要选出参加「区域小姐」的",
+    "time": 192
+  },
+  {
+    "fr": "Régionale.",
+    "zh": "选手。",
+    "time": 202
+  },
+  {
+    "fr": "Alors, j'ai répondu en hurlant, c'est toujours différent et toujours très important. Je n'ai pas quitté la maison depuis une semaine. Si c'est ça la vie d'un mannequin, alors j'arrête tout.",
+    "zh": "于是我也吼回去，永远都是不一样，永远都是非常重要。我已经一个星期没出过门了。如果这就是模特的生活，那我不干了。",
+    "time": 204
+  },
+  {
+    "fr": "Participe à ce concours toute seule.",
+    "zh": "你自己一个人去参加这个比赛吧。",
+    "time": 212
+  },
+  {
+    "fr": "J'ai couru dans ma chambre et j'ai fermé la porte à clé. Mais je n'allais pas rester tranquillement à la maison. Je me suis habillée. J'ai ouvert la fenêtre et j'ai sauté par la fenêtre sur la congère",
+    "zh": "我跑进房间，把门锁上。但我才不打算乖乖待在家里。我穿好衣服，打开窗户，从窗口跳到了",
+    "time": 215
+  },
+  {
+    "fr": "contre la maison.",
+    "zh": "屋子旁边的雪堆上。",
+    "time": 224
+  },
+  {
+    "fr": "J'étais si heureuse de sortir enfin. Mes amis me manquaient tellement.",
+    "zh": "终于能出来了，我太开心了。我太想念我的朋友们了。",
+    "time": 226
+  },
+  {
+    "fr": "On a fait des batailles de boules de neige, des descentes en luge, des anges dans la neige. Bref, je me sentais comme une enfant, ce qui m'avait tellement manqué.",
+    "zh": "我们打了雪仗，坐雪橇滑坡，在雪地里做雪天使。总之，我感觉自己又像个孩子了，这种感觉我太久没有过了。",
+    "time": 231
+  },
+  {
+    "fr": "Quelqu'un a porté un gros traîneau et nous avons décidé de descendre la colline ensemble. Dès que nous avons commencé, j'ai tout de suite eu l'impression que nous allions beaucoup trop vite et que nous n'avions",
+    "zh": "有人扛来一个大雪橇，我们决定一起从山坡上滑下去。刚一开始，我立刻就感觉我们滑得太快了，而且我们",
+    "time": 239
+  },
+  {
+    "fr": "absolument aucun contrôle et encore moins un moyen de freiner. Nous avons été déviés de notre trajectoire et nous nous sommes écrasés contre un poteau. On s'est regardé les uns les autres et on a",
+    "zh": "完全失去了控制，更别提有什么刹车的办法了。我们偏离了轨道，撞到了一根柱子上。我们你看看我我看看你，然后",
+    "time": 247
+  },
+  {
+    "fr": "tous éclaté de rire. Oh, c'était tellement génial. L'adrénaline, la liberté, le bonheur. On recommence. Mais quand j'ai essayé de me lever, j'ai ressenti une douleur terrible à la jambe. Ma cheville me faisait tellement",
+    "zh": "全都笑翻了。哦，太爽了。那种肾上腺素、自由、幸福感。再来一次！但当我想站起来的时候，我的腿传来一阵剧痛。我的脚踝疼得",
+    "time": 256
+  },
+  {
+    "fr": "mal que je me suis mise à pleurer.",
+    "zh": "我都哭了。",
+    "time": 267
+  },
+  {
+    "fr": "J'avais même peur de regarder son état.",
+    "zh": "我甚至不敢看它的样子。",
+    "time": 269
+  },
+  {
+    "fr": "Mes amis m'ont embarqué sur le tréneau et m'ont emmené à l'hôpital. Pendant que nous avions, il y avait tellement de pensées qui me traversaient l'esprit que je ne pouvais même pas les filtrer.",
+    "zh": "朋友们把我扶上雪橇，送我去了医院。在路上，脑子里冒出无数个念头，多到我根本没法筛选。",
+    "time": 271
+  },
+  {
+    "fr": "Ma seule pensée claire était : \"Le concours est demain.\"",
+    "zh": "我唯一清晰的念头是：「比赛就在明天。」",
+    "time": 280
+  },
+  {
+    "fr": "Oh ! En bon sang ! Je devais prévenir ma mère. À l'hôpital, on m'a fait une radio de la cheville et aucune fracture n'a été détectée. Mais le médecin a dit que j'avais endommagé mes ligaments, que ma",
+    "zh": "哦，天哪！我得通知我妈。到了医院，他们给我脚踝拍了片子，没发现骨折。但医生说我的韧带受损了，我的",
+    "time": 284
+  },
+  {
+    "fr": "jambe devait être plâtrée et que j'avais besoin de repos. Maman est venue dans le cabinet pile au moment où il me mettait le plâtre.",
+    "zh": "腿需要打石膏，而且我需要休息。妈妈正好在他给我打石膏的那一刻走进了诊室。",
+    "time": 294
+  },
+  {
+    "fr": "Elle n'était pas seulement bouleversée, elle était surtout brisée. Il me semblait qu'elle était tout simplement désemparée partout. Nous sommes rentrés chez nous en silence. Maman m'a donné à",
+    "zh": "她不只是心烦意乱，她简直是崩溃了。我觉得她整个人都不知所措了。我们一路沉默地回到家。妈妈给我",
+    "time": 302
+  },
+  {
+    "fr": "manger et m'a aidé à aller dans ma chambre. Je l'ai entendu pleurer plus tard. Saleté de luge. Pourquoi ais-je dû aller en faire juste avant le concours ?",
+    "zh": "做了吃的，扶我回房间。后来我听见她在哭。该死的雪橇。我为什么偏偏要在比赛前去玩那个？",
+    "time": 312
+  },
+  {
+    "fr": "Je me sentais coupable et j'avais super honte. Je voulais me racheter et j'ai appelé mes copines pour qu'elle m'aide à trouver un plan. Nous avons longuement réfléchi et tout planifié et le soir",
+    "zh": "我感到很内疚，也超级羞愧。我想弥补，于是打电话给我的姐妹们，让她们帮我想个办法。我们想了很久，把一切都计划好了，当天",
+    "time": 321
+  },
+  {
+    "fr": "même, j'ai annoncé à ma mère, \"Nous participer au concours demain, fin de la discussion.\" Cela a un peu ranimé ma mère, mais elle était sceptique et super inquiète pour ma jambe. Mais",
+    "zh": "晚上，我就向妈妈宣布：「我们明天参加比赛，没得商量。」这让妈妈稍微重新振作了一点，但她心存疑虑，也特别担心我的腿。但",
+    "time": 330
+  },
+  {
+    "fr": "j'étais inarrêtable. Pendant la nuit, nous avons retravaillé ma robe pour qu'elle couvre complètement mes jambes et nous avons aussi préparé le reste du concours. Le jour du concours, c'était",
+    "zh": "我势不可挡。整个晚上，我们重新改了我的裙子，让它完全盖住我的腿，我们还准备好了比赛的其余部分。比赛那天，那是",
+    "time": 343
+  },
+  {
+    "fr": "la première fois que j'avais vraiment confiance en moi car je savais exactement ce que j'allais faire.",
+    "zh": "我第一次真正对自己有信心，因为我清楚地知道我要做什么。",
+    "time": 352
+  },
+  {
+    "fr": "En plus, je voulais vraiment rendre ma mère heureuse. Nous avions bien réfléchi et tout préparé. Je suis sortie lors de la présentation des participants sans béquille, mais avec l'aide de deux",
+    "zh": "而且，我真的很想让妈妈开心。我们精心构思、做足了准备。选手入场时我出场了，没拄拐杖，而是靠两位",
+    "time": 358
+  },
+  {
+    "fr": "jeunes hommes en costume stylé. Cela a immédiatement attiré l'attention sur moi. J'ai été emmené au concours de talent sur un traneau et j'ai chanté une chanson joyeuse sur l'hiver, n'est-ce",
+    "zh": "穿着时髦西装的年轻男士搀扶。这立刻把所有人的注意力都吸引到我身上。才艺环节我被人用雪橇抬着上场，唱了一首关于冬天的欢快歌曲，是不是",
+    "time": 367
+  },
+  {
+    "fr": "pas ironique ? Et ce n'est que lors du défilé final. Quand j'ai mis une petite robe noire que tout le monde a vu que ma jambe était dans un plâtre. Comment peux-tu regarder les autres",
+    "zh": "很讽刺？直到最后的走秀环节，当我换上一条黑色小裙子，所有人才看到我的腿上打着石膏。你怎么能",
+    "time": 377
+  },
+  {
+    "fr": "participantes alors qu'il y a une fille sur scène avec des béquilles ? J'avais l'impression que tous les yeux étaient rivés sur moi. Je brillais de mil feu.",
+    "zh": "还盯着其他选手看，当台上有个姑娘拄着拐杖的时候？我感觉所有人的目光都聚焦在我身上。我光芒万丈。",
+    "time": 385
+  },
+  {
+    "fr": "Jamais auparavant, je ne m'étais senti aussi légère et à l'aise sur scène. Puis le moment des résultats est arrivé.",
+    "zh": "我从来没有像那样在台上感到如此轻松、如此自在。然后，公布结果的时刻到了。",
+    "time": 392
+  },
+  {
+    "fr": "Malheureusement, je n'ai pas gagné le concours mais on m'a décerné le prix du public et j'ai eu une standing ovation.",
+    "zh": "很遗憾，我没有赢得比赛，但我获得了「观众奖」，还得到了全场起立鼓掌。",
+    "time": 398
+  },
+  {
+    "fr": "Je n'avais pas besoin de cette couronne.",
+    "zh": "我并不需要那顶后冠。",
+    "time": 404
+  },
+  {
+    "fr": "Je me sentais déjà comme une reine. Ce fut mon plus grand succès parmi tous ces concours. De retour à la maison, ma mère et moi étions tout simplement rayonnantes de bonheur. Ensuite, nous",
+    "zh": "我已经觉得自己像个女王了。那是我所有这些比赛里最大的成功。回到家，妈妈和我都幸福得容光焕发。之后，我们",
+    "time": 405
+  },
+  {
+    "fr": "avons discuté et sommes parvenus à un compromis. Si je ne m'étais pas enfui, tout cela ne serait pas arrivé et aujourd'hui, je serais redevenue missante. Mais si ma mère ne m'avait pas",
+    "zh": "聊了聊，达成了一个妥协。如果我当初没逃出去，这一切就都不会发生，今天我可能又变回一无是处了。但如果我妈没",
+    "time": 416
+  },
+  {
+    "fr": "forcé à me préparer, je n'aurais pas pu me prendre en main. On s'est mise d'accord pour trouver un équilibre où l'on serait toutes les deux heureuses.",
+    "zh": "逼我做准备，我也没法真正掌控自己。我们达成一致，要找到一个让我们两个都幸福的平衡点。",
+    "time": 426
+  },
+  {
+    "fr": "Qu'est-ce que tu faisais quand tu étais enfant ? Était-ce ton choix ou tes parents t'obligeaient-ils à le faire ?",
+    "zh": "你小时候都做些什么？是你自己的选择，还是父母逼你做的？",
+    "time": 433
+  },
+  {
+    "fr": "Dis-le nous dans les commentaires ci-dessous et n'oublie pas de partager cette histoire avec tes amis.",
+    "zh": "在下面的评论里告诉我们，别忘了把这个故事分享给你的朋友们。",
+    "time": 438
+  }
+];
+
+// ── WORDBOOK STATE ─────────────────────────
+let wordbookOpen = false;
+let wordbookQueue = [];     // indices in display order
+let wordbookLearned = loadLearned();
+let cardRevealed = false;
+
+function toggleWordbook() {
+  wordbookOpen = !wordbookOpen;
+  document.getElementById("wordbookOverlay").classList.toggle("open", wordbookOpen);
+  document.getElementById("wordbookPanel").classList.toggle("open", wordbookOpen);
+  if (wordbookOpen) {
+    // Build queue from all not-yet-learned words
+    wordbookQueue = vocabList
+      .map((_, i) => i)
+      .filter(i => !wordbookLearned.has(i));
+    cardRevealed = false;
+    renderWordbook();
+  }
+}
+
+function renderWordbook() {
+  const total = vocabList.length;
+  const learned = wordbookLearned.size;
+
+  // Progress
+  const progress = document.getElementById("wordbookProgress");
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 100;
+  progress.innerHTML = `
+    ${learned} / ${total} 已掌握
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+  `;
+
+  // Empty state
+  const emptyEl = document.getElementById("wordbookEmpty");
+  const cardEl = document.getElementById("flashcard");
+  const actionsEl = document.getElementById("wordbookActions");
+
+  if (wordbookQueue.length === 0) {
+    emptyEl.classList.add("show");
+    cardEl.style.display = "none";
+    actionsEl.style.display = "none";
+    return;
+  }
+
+  emptyEl.classList.remove("show");
+  cardEl.style.display = "flex";
+  actionsEl.style.display = "flex";
+  cardEl.classList.remove("revealed");
+  cardRevealed = false;
+
+  const word = vocabList[wordbookQueue[0]];
+  document.getElementById("cardFront").textContent = word.word;
+  document.getElementById("cardBack").innerHTML = `<strong>${word.zh}</strong>`;
+  document.getElementById("cardExample").textContent = "« " + word.example + " »";
+}
+
+function revealCard() {
+  if (cardRevealed || wordbookQueue.length === 0) return;
+  cardRevealed = true;
+  document.getElementById("flashcard").classList.add("revealed");
+}
+
+function markWord(action) {
+  if (wordbookQueue.length === 0) return;
+
+  const idx = wordbookQueue.shift(); // remove from front
+
+  if (action === "know") {
+    wordbookLearned.add(idx);
+    saveLearned();
+  } else {
+    // "不认识" → push to the back of the queue
+    wordbookQueue.push(idx);
+  }
+
+  // 1) Mark card as "switching" to disable transitions
+  const cardEl = document.getElementById("flashcard");
+  cardEl.classList.add("switching");
+
+  // 2) Update content with new word
+  const word = vocabList[wordbookQueue[0]];
+  document.getElementById("cardFront").textContent = word.word;
+  document.getElementById("cardBack").innerHTML = `<strong>${word.zh}</strong>`;
+  document.getElementById("cardExample").textContent = "« " + word.example + " »";
+
+  // 3) Remove revealed class — with transitions off, no flash
+  cardEl.classList.remove("revealed");
+  cardRevealed = false;
+
+  // 4) Force reflow then re-enable transitions
+  void cardEl.offsetHeight;
+  cardEl.classList.remove("switching");
+
+  // 5) Update progress bar
+  const total = vocabList.length;
+  const learned = wordbookLearned.size;
+  const progress = document.getElementById("wordbookProgress");
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 100;
+  progress.innerHTML = `
+    ${learned} / ${total} 已掌握
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+  `;
+
+  // 6) Check empty state
+  const emptyEl = document.getElementById("wordbookEmpty");
+  const actionsEl = document.getElementById("wordbookActions");
+  if (wordbookQueue.length === 0) {
+    cardEl.style.display = "none";
+    actionsEl.style.display = "none";
+    emptyEl.classList.add("show");
+  } else {
+    cardEl.style.display = "flex";
+    actionsEl.style.display = "flex";
+    emptyEl.classList.remove("show");
+  }
+}
+
+// ── CUSTOM WORD INPUT ─────────────────────
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function wordInText(word, text) {
+  // Split by common punctuation and whitespace, then check exact word match
+  const normalized = word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+  const words = text.toLowerCase().split(/[\s,.;:!?()'"«»\-—…\/]+/).filter(Boolean);
+  return words.some(w => {
+    const wNorm = w.replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+    return wNorm === normalized || w === word.toLowerCase();
+  });
+}
+
+function showWordFeedback(msg, type) {
+  const el = document.getElementById("wordAddFeedback");
+  el.textContent = msg;
+  el.className = "wordbook-add-feedback show " + type;
+  clearTimeout(el._timeout);
+  el._timeout = setTimeout(function() {
+    el.classList.remove("show");
+  }, 4000);
+}
+
+function addCustomWord() {
+  const input = document.getElementById("wordAddInput");
+  const word = input.value.trim();
+
+  if (!word) {
+    showWordFeedback("请输入法语单词", "notfound");
+    return;
+  }
+
+  // Check if already in vocabList
+  const normInput = word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+  const alreadyExists = vocabList.some(function(v) {
+    var n = v.word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+    return n === normInput;
+  });
+  if (alreadyExists) {
+    showWordFeedback('\u00AB' + word + '\u00BB \u5df2\u5728\u5355\u8bcd\u672c\u4e2d', 'exists');
+    return;
+  }
+
+  // Search subtitle corpus
+  var matches = [];
+  for (var i = 0; i < subtitleCorpus.length; i++) {
+    if (wordInText(word, subtitleCorpus[i].fr)) {
+      matches.push(subtitleCorpus[i]);
+    }
+  }
+
+  if (matches.length === 0) {
+    showWordFeedback('\u672a\u5728\u672c\u6b21\u89c6\u9891\u5b57\u5e55\u4e2d\u627e\u5230\u300c' + word + '\u300d\uff0c\u8bf7\u68c0\u67e5\u62fc\u5199\u6216\u5c1d\u8bd5\u5176\u4ed6\u5355\u8bcd', 'notfound');
+    return;
+  }
+
+  // Found — use first match, prefer shorter sentences as examples
+  matches.sort(function(a, b) { return a.fr.length - b.fr.length; });
+  var best = matches[0];
+  // For really long sentences, prefer one with the word in a concise clause
+  for (var j = 0; j < matches.length; j++) {
+    if (matches[j].fr.length < 60 && matches[j].fr.length > 10) {
+      best = matches[j];
+      break;
+    }
+  }
+
+  // Build a concise definition from the sentence translation
+  var def = best.zh;
+  if (def.length > 50) def = def.substring(0, 48) + '\u2026';
+
+  var entry = {
+    word: word,
+    zh: def,
+    example: best.fr,
+    fromSubtitle: true,
+  };
+
+  vocabList.push(entry);
+  saveVocab();
+  var newIdx = vocabList.length - 1;
+
+  // If wordbook is open, insert at front of queue so it shows immediately
+  if (wordbookOpen) {
+    wordbookQueue.unshift(newIdx);
+    renderWordbook();
+  }
+
+  // Clear input and show success
+  input.value = '';
+  var preview = best.fr.length > 40 ? best.fr.substring(0, 38) + '\u2026' : best.fr;
+  showWordFeedback('\u2714 \u5df2\u4ece\u5b57\u5e55\u4e2d\u627e\u5230\u300c' + word + '\u300d\uff1a' + preview, 'success');
+}
+
+// ── SUBTITLE PANEL ──────────────────────────
+let subtitleActiveTime = null;   // currently highlighted time
+let subtitleInterval = null;     // polling interval ID
+
+function renderSubtitlePanel() {
+  const panel = document.getElementById("subtitlePanel");
+  panel.innerHTML = subtitleCorpus.map(line => `
+    <div class="subtitle-line" data-time="${line.time}"
+         onclick="seekTo(${line.time})">
+      <span class="sub-time">${formatTime(line.time)}</span>
+      <span class="sub-fr">${line.fr}</span>
+      <span class="sub-zh">${line.zh}</span>
+    </div>
+  `).join("");
+}
+
+function highlightSubtitle(seconds) {
+  // Find the current subtitle line by time
+  let bestTime = null;
+  for (let i = 0; i < subtitleCorpus.length; i++) {
+    if (subtitleCorpus[i].time <= seconds) {
+      bestTime = subtitleCorpus[i].time;
+    } else {
+      break;
+    }
+  }
+  if (bestTime === subtitleActiveTime) return;
+  subtitleActiveTime = bestTime;
+
+  // Update active class
+  const lines = document.querySelectorAll(".subtitle-line");
+  lines.forEach(el => {
+    const t = parseInt(el.getAttribute("data-time"));
+    el.classList.toggle("active", t === bestTime);
+  });
+
+  // Auto-scroll to the active line
+  if (bestTime !== null) {
+    const activeEl = document.querySelector(".subtitle-line.active");
+    if (activeEl) {
+      activeEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+}
+
+function startSubtitleTracking() {
+  stopSubtitleTracking();
+  subtitleInterval = setInterval(function() {
+    if (ytPlayerReady && ytPlayer && ytPlayer.getCurrentTime) {
+      try {
+        var t = ytPlayer.getCurrentTime();
+        if (typeof t === "number") highlightSubtitle(t);
+      } catch (_) {}
+    }
+  }, 500);
+}
+
+function stopSubtitleTracking() {
+  if (subtitleInterval) {
+    clearInterval(subtitleInterval);
+    subtitleInterval = null;
+  }
+}
+
+// ── INIT ──────────────────────────────────
+renderGrammarList();
+renderSlangList();
+renderLearningSpace();
+renderSubtitlePanel();
+startSubtitleTracking();
+</script>
+</body>
+</html>
