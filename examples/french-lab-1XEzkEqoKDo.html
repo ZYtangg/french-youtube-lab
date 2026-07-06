@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地道法语表达实验室 — L'IA va remplacer l'humain ? (Yomi Denzel)</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --surface: #EAECF0;
+    --card: #FFFFFF;
+    --border: #EAECF0;
+    --border-hover: #FE7F2D;
+    --border-active: #FE7F2D;
+    --accent: #FE7F2D;
+    --accent-light: rgba(254, 127, 45, 0.08);
+    --text: #000000;
+    --text-secondary: #233D4D;
+    --text-tertiary: #6B7D8A;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Main layout */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Grammar List — fixed compact */
+  .grammar-list {
+    flex: 0 1 300px;
+    min-width: 220px;
+    border-right: 0.5px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .grammar-list-header {
+    padding: 20px 24px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .grammar-section-header {
+    padding: 16px 24px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    border-top: 1.5px solid var(--accent);
+    margin: 12px 16px 0;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  .grammar-list-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px 20px;
+  }
+
+  .grammar-list-items::-webkit-scrollbar {
+    width: 4px;
+  }
+  .grammar-list-items::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .grammar-list-items::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Grammar List Item */
+  .grammar-item {
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.18s ease-out;
+    margin-bottom: 8px;
+    border: 0.5px solid transparent;
+    background: transparent;
+  }
+
+  .grammar-item:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .grammar-item.active {
+    background: var(--card);
+    border-color: var(--border-active);
+  }
+  .grammar-item.active::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .grammar-item .name-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+    padding-right: 52px;
+  }
+
+  .grammar-item .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.35;
+  }
+
+  .grammar-item .cefr-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--border);
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .grammar-item.active .cefr-badge {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .grammar-item .meaning {
+    font-size: 12px;
+    color: var(--text-secondary);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    padding-right: 52px;
+  }
+
+  .grammar-item .pill {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 11px;
+    background: var(--surface);
+    font-size: 11px;
+    color: var(--text-secondary);
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    white-space: nowrap;
+  }
+
+  .grammar-item.active .pill {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .grammar-item:first-child .pill::after {
+    content: " · TOP1";
+  }
+
+  /* ── Slang items — distinct visual style ── */
+  #slangList .grammar-item {
+    border-left: 3px solid transparent;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: transparent;
+  }
+  #slangList .grammar-item:hover {
+    background: rgba(254, 127, 45, 0.04);
+  }
+  #slangList .grammar-item.active {
+    background: var(--card);
+    border-color: var(--border-active);
+    border-left-color: var(--accent);
+    border-left-width: 3px;
+  }
+  #slangList .grammar-item.active::before {
+    content: none; /* remove the inner bar — left-border serves this purpose */
+  }
+  #slangList .grammar-item .pill {
+    background: rgba(254, 127, 45, 0.06);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 500;
+  }
+  #slangList .grammar-item.active .pill {
+    background: var(--accent-light);
+  }
+
+  /* Learning Space — 65% */
+  .learning-space {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 24px 32px 0;
+  }
+
+  .grammar-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+
+  .grammar-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .freq-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 12px;
+    border-radius: 12px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .cefr-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 16px 0;
+    flex-shrink: 0;
+  }
+
+  .explanation {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--surface);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  /* Bottom area: examples + video */
+  .content-area {
+    display: flex;
+    flex: 1;
+    gap: 28px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .examples-col {
+    flex: 0 0 40%;
+    min-width: 280px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  .examples-col::-webkit-scrollbar {
+    width: 4px;
+  }
+  .examples-col::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .examples-col::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .example-card {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border);
+    margin-bottom: 10px;
+    transition: all 0.12s ease;
+    cursor: pointer;
+  }
+
+  .example-card:hover {
+    background: var(--accent-light);
+  }
+
+  .example-card.playing {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  .example-card .fr {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .example-card.playing .fr { color: var(--accent); }
+
+  .example-card .zh {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .example-card.playing .zh { color: var(--accent); }
+
+  .timestamp {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 6px;
+    cursor: pointer;
+    transition: color 0.12s;
+  }
+  .timestamp:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+  .example-card.playing .timestamp {
+    color: var(--accent);
+  }
+
+  /* Video column */
+  .video-col {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .video-wrapper {
+    align-self: center;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #1a1a1a;
+    height: 46vh;
+    max-height: 420px;
+  }
+  .video-wrapper iframe {
+    display: block;
+    height: 100%;
+    aspect-ratio: 9/16;
+    border: none;
+  }
+
+  /* Subtitle panel */
+  .subtitle-panel {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 12px;
+    padding-right: 4px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .subtitle-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+  .subtitle-panel::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .subtitle-line {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-left: 3px solid transparent;
+  }
+  .subtitle-line:hover {
+    background: var(--surface);
+  }
+  .subtitle-line.active {
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+  }
+  .subtitle-line .sub-fr {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .subtitle-line .sub-zh {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .subtitle-line .sub-time {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Wordbook button — below subtitle panel */
+  .wordbook-btn {
+    display: block;
+    width: 33%;
+    align-self: flex-end;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font);
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .wordbook-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(254, 127, 45, 0.3);
+  }
+
+  /* Wordbook panel */
+  .wordbook-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .wordbook-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .wordbook-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100vh;
+    background: var(--bg);
+    border-left: 0.5px solid var(--border);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 40px rgba(0,0,0,0.08);
+  }
+  .wordbook-panel.open {
+    transform: translateX(0);
+  }
+
+  .wordbook-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .wordbook-header h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .wordbook-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+    transition: background 0.12s;
+  }
+  .wordbook-close:hover { background: var(--border); }
+
+  .wordbook-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    overflow: hidden;
+  }
+
+  .wordbook-progress {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .wordbook-progress .bar-track {
+    width: 160px;
+    height: 3px;
+    background: var(--surface);
+    border-radius: 2px;
+    margin: 8px auto 0;
+    overflow: hidden;
+  }
+  .wordbook-progress .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .flashcard {
+    width: 100%;
+    min-height: 200px;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 40px 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+  }
+  /* When switching cards, disable transitions to avoid brief flash of new answer */
+  .flashcard.switching,
+  .flashcard.switching .back,
+  .flashcard.switching .example-hint,
+  .flashcard.switching .front {
+    transition: none !important;
+  }
+  .flashcard.revealed {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+  }
+  .flashcard .front {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    transition: opacity 0.15s ease;
+  }
+  .flashcard.revealed .front {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+  .flashcard .back {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.5;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .flashcard.revealed .back {
+    opacity: 1;
+    max-height: 120px;
+  }
+  .flashcard .example-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 20px;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.2s ease 0.1s;
+  }
+  .flashcard.revealed .example-hint {
+    opacity: 1;
+  }
+  .flashcard .tap-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    position: absolute;
+    bottom: 16px;
+    opacity: 0.6;
+  }
+  .flashcard.revealed .tap-hint {
+    display: none;
+  }
+
+  .wordbook-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .flashcard.revealed ~ .wordbook-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .wb-btn {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 22px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    font-family: var(--font);
+  }
+  .wb-btn.know {
+    background: var(--accent);
+    color: #fff;
+  }
+  .wb-btn.know:hover { filter: brightness(1.08); }
+  .wb-btn.review {
+    background: var(--surface);
+    color: var(--text-secondary);
+  }
+  .wb-btn.review:hover { background: var(--border); }
+
+  .wordbook-empty {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    display: none;
+  }
+  .wordbook-empty.show { display: block; }
+  .wordbook-empty .icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  /* Wordbook Add Area — at panel bottom */
+  .wordbook-add-area {
+    flex-shrink: 0;
+    border-top: 0.5px solid var(--border);
+    padding: 16px 24px;
+  }
+  .wordbook-add-row {
+    display: flex;
+    gap: 8px;
+  }
+  .wordbook-add-input {
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    padding: 0 12px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .wordbook-add-input::placeholder {
+    color: var(--text-tertiary);
+    font-size: 12px;
+  }
+  .wordbook-add-input:focus {
+    border-color: var(--accent);
+  }
+  .wordbook-add-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font);
+    white-space: nowrap;
+    transition: filter 0.12s ease;
+  }
+  .wordbook-add-btn:hover {
+    filter: brightness(1.1);
+  }
+  .wordbook-add-feedback {
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .wordbook-add-feedback.show {
+    opacity: 1;
+  }
+  .wordbook-add-feedback.success {
+    color: #2E7D32;
+  }
+  .wordbook-add-feedback.notfound {
+    color: var(--text-tertiary);
+  }
+  .wordbook-add-feedback.exists {
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">L'IA va totalement pouvoir remplacer l'humain ? | Yomi Denzel（Shorts · 自动字幕）</div>
+
+<div class="main">
+
+  <!-- Grammar List -->
+  <div class="grammar-list">
+    <div class="grammar-list-header">地道表达 · 按视频顺序</div>
+    <div class="grammar-list-items" id="grammarList"></div>
+  </div>
+
+  <!-- Learning Space -->
+  <div class="learning-space">
+    <div class="grammar-title-row">
+      <span class="grammar-title" id="grammarTitle">mettre en place</span>
+      <span class="cefr-pill" id="cefrPill">B2</span>
+      <span class="freq-pill" id="freqPill">12次出现</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="explanation" id="explanation"></div>
+
+    <div class="divider"></div>
+
+    <div class="content-area">
+      <div class="examples-col">
+        <div class="section-label">Examples</div>
+        <div id="examplesContainer"></div>
+      </div>
+
+      <div class="video-col">
+        <div class="video-wrapper">
+          <div id="ytPlayer"></div>
+        </div>
+        <div class="subtitle-panel" id="subtitlePanel"></div>
+        <button class="wordbook-btn" id="wordbookBtn" onclick="toggleWordbook()">背 B1+ 单词</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Wordbook Overlay -->
+<div class="wordbook-overlay" id="wordbookOverlay" onclick="toggleWordbook()"></div>
+
+<!-- Wordbook Panel -->
+<div class="wordbook-panel" id="wordbookPanel">
+  <div class="wordbook-header">
+    <h2>单词本</h2>
+    <button class="wordbook-close" onclick="toggleWordbook()">✕</button>
+  </div>
+  <div class="wordbook-body" id="wordbookBody">
+    <div class="wordbook-progress" id="wordbookProgress"></div>
+    <div class="flashcard" id="flashcard" onclick="revealCard()">
+      <div class="front" id="cardFront"></div>
+      <div class="back" id="cardBack"></div>
+      <div class="example-hint" id="cardExample"></div>
+      <div class="tap-hint">点击翻转</div>
+    </div>
+    <div class="wordbook-actions" id="wordbookActions">
+      <button class="wb-btn review" onclick="markWord('dontknow')">不认识</button>
+      <button class="wb-btn know" onclick="markWord('know')">认识</button>
+    </div>
+    <div class="wordbook-empty" id="wordbookEmpty">
+      <div class="icon">🎉</div>
+      <div>本视频单词已全部掌握</div>
+    </div>
+  </div>
+  <div class="wordbook-add-area">
+    <div class="wordbook-add-row">
+      <input type="text" class="wordbook-add-input" id="wordAddInput"
+             placeholder="输入视频中的法语单词…"
+             onkeydown="if(event.key==='Enter')addCustomWord()" />
+      <button class="wordbook-add-btn" onclick="addCustomWord()">添加</button>
+    </div>
+    <div class="wordbook-add-feedback" id="wordAddFeedback"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────
+const grammars = [
+  {
+    "id": 1,
+    "name": "en fait",
+    "level": "B1",
+    "meaning": "其实、事实上",
+    "freq": 2,
+    "explanation": "「inconsciemment en fait on pense...」——en fait 是法国人边说边组织思路、澄清真实想法的口头禅（「其实、说白了」）。可放句首、句中、句尾。口语里高频到几乎每句话都有，是母语者语流的标志。",
+    "examples": [
+      {
+        "fr": "inconsciemment, en fait, on pense : oui, l'IA va remplacer ces jobs.",
+        "zh": "其实我们下意识里会想：对，AI 会取代这些工作。",
+        "time": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "quand même",
+    "level": "B1",
+    "meaning": "还是、毕竟、不过",
+    "freq": 1,
+    "explanation": "「il y a quand même des trucs qu'on devra faire nous-même」——quand même 表示「尽管如此、还是、毕竟」，用来承接前面观点后补一个转折/让步，语气很地道。口语里也常单用表示「真是的/不至于吧」。这里是「话虽如此，还是有些事得自己做」。",
+    "examples": [
+      {
+        "fr": "il y a quand même des trucs qu'on devra faire nous-même.",
+        "zh": "不过还是有些事我们得自己来做。",
+        "time": 4
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "un truc",
+    "level": "A2",
+    "meaning": "东西、玩意儿（口语万能词）",
+    "freq": 2,
+    "explanation": "「des trucs qu'on devra faire」「les trucs pour lesquels...」——truc 是法语口语里替代 chose 的万能词，「东西、玩意儿、那什么」，一时想不起具体名字时也用它。极其地道，但正式书面语避免。复数 des trucs。同类：un machin、un bidule。",
+    "examples": [
+      {
+        "fr": "les trucs pour lesquels on est encore utile en tant qu'humain, c'est notre intelligence.",
+        "zh": "我们作为人类还有用武之地的那些方面，就是我们的智能。",
+        "time": 9
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "au final",
+    "level": "B1",
+    "meaning": "到头来、最终",
+    "freq": 1,
+    "explanation": "「donc au final ça nous rend plus puissant」——au final 是口语里「归根结底、到头来」的地道说法（书面更常用 finalement / en fin de compte）。用来引出结论。注意这是口语化表达，严谨写作里有人认为不规范，但日常无处不在。",
+    "examples": [
+      {
+        "fr": "au final, ça nous rend plus puissant.",
+        "zh": "到头来，这让我们变得更强大。",
+        "time": 5
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "être en train de + inf.",
+    "level": "B1",
+    "meaning": "正在做…（进行时）",
+    "freq": 1,
+    "explanation": "「on est en train de créer de l'intelligence」——être en train de + 动词原形，是法语表达「正在进行」的标准结构（法语没有英语的 -ing 进行时，靠这个短语）。强调动作此刻正在发生。这里：我们正在（亲手）创造智能。",
+    "examples": [
+      {
+        "fr": "on est en train de créer de l'intelligence.",
+        "zh": "我们正在（亲手）创造智能。",
+        "time": 8
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "en tant que + 名词",
+    "level": "B1",
+    "meaning": "作为…（身份）",
+    "freq": 1,
+    "explanation": "「on est encore utile en tant qu'humain」——en tant que + 身份/角色，表示「以…的身份、作为…」，非常地道且书面口语通吃。en tant que responsable（作为负责人）、en tant qu'ami（作为朋友）。这里：作为人类我们还有用。",
+    "examples": [
+      {
+        "fr": "les trucs pour lesquels on est encore utile en tant qu'humain.",
+        "zh": "我们作为人类还派得上用场的那些方面。",
+        "time": 11
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "arriver à + inf.",
+    "level": "B1",
+    "meaning": "成功做到、能够",
+    "freq": 1,
+    "explanation": "「quand on arrive à remplacer... par des robots」——arriver à + 动词原形 = 「设法做到、成功、能够」，强调「经过努力最终做成」，比 pouvoir（能）更含「达成」意味。je n'arrive pas à dormir（我睡不着=没法入睡）是经典用法。",
+    "examples": [
+      {
+        "fr": "quand on arrive à remplacer tout ce qui est physique par des robots.",
+        "zh": "当我们能把一切体力活都用机器人取代时。",
+        "time": 13
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "tout ce qui est + 名词/形容词",
+    "level": "B2",
+    "meaning": "所有…那一类的东西",
+    "freq": 2,
+    "explanation": "「tout ce qui est physique」「tout ce qui est mental」——「tout ce qui est + 形容词/名词」是法国人概括一整类事物的地道说法，「凡是…的、所有…那一块」。口语里极常用来打包一个范畴：tout ce qui est administratif（所有行政那一摊事）、tout ce qui est nourriture（吃的那一类）。",
+    "examples": [
+      {
+        "fr": "tout ce qui est physique avec la robotique, et tout ce qui est mental avec l'IA.",
+        "zh": "体力那一块用机器人，脑力那一块用 AI。",
+        "time": 16
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "se faire la projection / se projeter",
+    "level": "B2",
+    "meaning": "设想、想象未来情景",
+    "freq": 1,
+    "explanation": "「peu de monde se fait la projection」——se faire la projection（口语，=se projeter）指「在脑中投射、设想未来的情景」。这里：很少有人真的去设想那个画面。地道且有点「思辨感」的表达。近义 s'imaginer、envisager。",
+    "examples": [
+      {
+        "fr": "peu de monde se fait la projection, genre vraiment.",
+        "zh": "很少有人真的去设想那个画面，我是说真的。",
+        "time": 21
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "genre",
+    "level": "B1",
+    "meaning": "就像、比如、那种（口语填充）",
+    "freq": 1,
+    "explanation": "「genre vraiment si on a...」——genre 在年轻人口语里当填充/举例词用，相当于「就像、好比、那种感觉」，类似英语的 like。它本义是「类型/性别」，但口语里被泛化成语气词。用多了显得随意，但听懂它才跟得上年轻法国人语速。",
+    "examples": [
+      {
+        "fr": "peu de monde se fait la projection, genre vraiment.",
+        "zh": "很少有人真的去设想，就那种，真的认真想。",
+        "time": 23
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "peu de monde",
+    "level": "B1",
+    "meaning": "没什么人、很少人",
+    "freq": 1,
+    "explanation": "「peu de monde se fait la projection」——monde 除了「世界」，口语里超高频指「人（们）」：du monde=有人/人多，peu de monde=没几个人，tout le monde=所有人，il y a du monde=人真多。这里 peu de monde=很少有人。这是 monde 最地道的口语义，务必掌握。",
+    "examples": [
+      {
+        "fr": "peu de monde se fait la projection.",
+        "zh": "没几个人会去设想这个。",
+        "time": 21
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "telle que / tel que",
+    "level": "B2",
+    "meaning": "像…这样的、如同",
+    "freq": 1,
+    "explanation": "「l'intelligence telle que l'intelligence humaine」——tel(le) que 表示「像…这样的、正如」，用来举例或精确限定。要和后面名词的阴阳性配合：une intelligence telle que…。书面口语都地道，比 comme 更精确正式。",
+    "examples": [
+      {
+        "fr": "si on a comme ressource l'intelligence, telle que l'intelligence humaine.",
+        "zh": "如果我们把智能——像人类智能那样的智能——当作资源。",
+        "time": 25
+      }
+    ]
+  }
+];
+
+// Sort by frequency descending
+grammars.sort((a, b) => b.freq - a.freq);
+
+// ── SLANG & EXPRESSIONS ──────────────────────
+// Part 2: colloquial expressions, idioms, and nuanced usage specific to this video
+const slangs = [];
+slangs.sort((a, b) => b.freq - a.freq);
+
+// ── STATE ──────────────────────────────────
+let currentGrammarId = grammars[0].id;
+let currentGrammarIsSlang = false;  // false = grammar, true = slang
+let currentPlayingTime = null;
+
+// ── RENDER ──────────────────────────────────
+function renderGrammarList() {
+  const container = document.getElementById("grammarList");
+  container.innerHTML = grammars.map(g => `
+    <div class="grammar-item ${(!currentGrammarIsSlang && g.id === currentGrammarId) ? 'active' : ''}"
+         data-id="${g.id}"
+         data-type="grammar"
+         onclick="selectGrammar(${g.id}, false)">
+      <div class="name-row">
+        <span class="name">${g.name}</span>
+        <span class="cefr-badge">${g.level}</span>
+      </div>
+      <div class="meaning">${g.meaning}</div>
+      <span class="pill">${g.freq}次</span>
+    </div>
+  `).join("");
+
+  renderSlangList();
+}
+
+function renderSlangList() {
+  const container = document.getElementById("slangList");
+  const header = document.getElementById("slangSectionHeader");
+  if (!container) return;
+  if (slangs.length === 0) {
+    container.innerHTML = "";
+    if (header) header.style.display = "none";
+    return;
+  }
+  if (header) header.style.display = "block";
+  container.innerHTML = slangs.map(g => `
+    <div class="grammar-item ${(currentGrammarIsSlang && g.id === currentGrammarId) ? 'active' : ''}"
+         data-id="${g.id}"
+         data-type="slang"
+         onclick="selectGrammar(${g.id}, true)">
+      <div class="name-row">
+        <span class="name">${g.name}</span>
+        <span class="cefr-badge">${g.level}</span>
+      </div>
+      <div class="meaning">${g.meaning}</div>
+      <span class="pill">${g.freq}次</span>
+    </div>
+  `).join("");
+}
+
+function renderLearningSpace() {
+  const source = currentGrammarIsSlang ? slangs : grammars;
+  const g = source.find(x => x.id === currentGrammarId);
+  if (!g) return;
+
+  document.getElementById("grammarTitle").textContent = g.name;
+  document.getElementById("cefrPill").textContent = g.level;
+  document.getElementById("freqPill").textContent = g.freq + "次出现";
+  document.getElementById("explanation").textContent = g.explanation;
+
+  const examplesContainer = document.getElementById("examplesContainer");
+  examplesContainer.innerHTML = g.examples.map((ex, i) => `
+    <div class="example-card ${currentPlayingTime === ex.time ? 'playing' : ''}"
+         id="ex-${g.id}-${i}"
+         onclick="seekTo(${ex.time})">
+      <div class="fr">${ex.fr}</div>
+      <div class="zh">${ex.zh}</div>
+      <span class="timestamp">▶ ${formatTime(ex.time)}</span>
+    </div>
+  `).join("");
+}
+
+function selectGrammar(id, isSlang) {
+  currentGrammarId = id;
+  currentGrammarIsSlang = !!isSlang;
+  currentPlayingTime = null;
+  renderGrammarList();
+  renderSlangList();
+  renderLearningSpace();
+}
+
+var ytPlayer = null;
+var ytPlayerReady = false;
+
+function onYouTubeIframeAPIReady() {
+  var hint = document.getElementById("ytStatusHint");
+  ytPlayer = new YT.Player("ytPlayer", {
+    videoId: "1XEzkEqoKDo",
+    playerVars: { autoplay: 0, controls: 1, modestbranding: 1, rel: 0, hl: "fr", playsinline: 1, origin: window.location.origin },
+    events: {
+      onReady: function() {
+        ytPlayerReady = true;
+        if (hint) { hint.innerHTML = "\u2705 \u89c6\u9891\u5df2\u52a0\u8f7d \u2014 \u53ef\u4ee5\u64ad\u653e\u4e86"; hint.style.color = "#2E7D32"; }
+      },
+      onError: function(e) {
+        if (hint) { hint.innerHTML = '\u26a0\ufe0f \u89c6\u9891\u52a0\u8f7d\u5931\u8d25\uff08\u9519\u8bef\u7801 ' + e.data + '\uff09\u3002\u70b9 <a href="https://www.youtube.com/watch?v=1XEzkEqoKDo" target="_blank" style="color:#FE7F2D;">\u2197 \u5728 YouTube \u6253\u5f00</a>'; hint.style.color = "#C62828"; }
+      }
+    }
+  });
+}
+(function loadYouTubeAPI() {
+  if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  }
+})();
+
+function seekTo(seconds) {
+  currentPlayingTime = seconds;
+  var seekTarget = Math.max(0, seconds - 3);
+  if (ytPlayerReady && ytPlayer && ytPlayer.seekTo) {
+    ytPlayer.seekTo(seekTarget, true);
+    if (ytPlayer.playVideo) ytPlayer.playVideo();
+  }
+  var link = document.getElementById("ytOpenExternal");
+  if (link) link.href = "https://www.youtube.com/watch?v=1XEzkEqoKDo&t=" + Math.max(0, Math.floor(seconds)) + "s";
+  renderLearningSpace();
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ":" + String(sec).padStart(2, "0");
+}
+
+// ── WORDBOOK DATA ──────────────────────────
+// Concept-level vocabulary (A2+), excluding basic A1 words and grammar function words
+const DEFAULT_VOCAB = [
+  {
+    "word": "inconsciemment",
+    "zh": "下意识地、无意识地",
+    "example": "inconsciemment on pense que l'IA va remplacer ces jobs."
+  },
+  {
+    "word": "remplacer",
+    "zh": "取代、替换",
+    "example": "l'IA va remplacer ces jobs."
+  },
+  {
+    "word": "un job",
+    "zh": "工作、活儿（口语借英语）",
+    "example": "remplacer ces jobs."
+  },
+  {
+    "word": "un truc",
+    "zh": "东西、玩意儿（口语）",
+    "example": "des trucs qu'on devra faire nous-même."
+  },
+  {
+    "word": "puissant(e)",
+    "zh": "强大的",
+    "example": "ça nous rend plus puissant."
+  },
+  {
+    "word": "rendre + adj",
+    "zh": "使变得…",
+    "example": "ça nous rend plus puissant."
+  },
+  {
+    "word": "créer",
+    "zh": "创造",
+    "example": "on est en train de créer de l'intelligence."
+  },
+  {
+    "word": "l'intelligence (f.)",
+    "zh": "智能、智慧",
+    "example": "on est en train de créer de l'intelligence."
+  },
+  {
+    "word": "utile",
+    "zh": "有用的",
+    "example": "les trucs pour lesquels on est encore utile."
+  },
+  {
+    "word": "en tant que",
+    "zh": "作为…（身份）",
+    "example": "utile en tant qu'humain."
+  },
+  {
+    "word": "physique",
+    "zh": "身体的、体力的",
+    "example": "tout ce qui est physique."
+  },
+  {
+    "word": "la robotique",
+    "zh": "机器人技术",
+    "example": "remplacer par la robotique."
+  },
+  {
+    "word": "mental(e)",
+    "zh": "精神的、脑力的",
+    "example": "tout ce qui est mental."
+  },
+  {
+    "word": "lié(e) à",
+    "zh": "与…相关的",
+    "example": "tout ce qui est lié à l'intelligence."
+  },
+  {
+    "word": "la projection",
+    "zh": "设想、投射（未来情景）",
+    "example": "peu de monde se fait la projection."
+  },
+  {
+    "word": "une ressource",
+    "zh": "资源",
+    "example": "si on a comme ressource l'intelligence."
+  },
+  {
+    "word": "une forme de",
+    "zh": "一种…、某种形式的",
+    "example": "toute forme de travail."
+  },
+  {
+    "word": "inutile",
+    "zh": "无用的、没意义的",
+    "example": "toute forme de travail est inutile."
+  }
+];
+
+function loadVocab() {
+  try {
+    var raw = localStorage.getItem("frenchlab_vocab");
+    if (raw) { var arr = JSON.parse(raw); if (arr.length) return arr; }
+  } catch (e) {}
+  // deep-copy defaults so mutations don't affect DEFAULT_VOCAB
+  return JSON.parse(JSON.stringify(DEFAULT_VOCAB));
+}
+
+function saveVocab() {
+  localStorage.setItem("frenchlab_vocab", JSON.stringify(vocabList));
+}
+
+function loadLearned() {
+  try {
+    var raw = localStorage.getItem("frenchlab_learned");
+    if (raw) return new Set(JSON.parse(raw));
+  } catch (e) {}
+  return new Set();
+}
+
+function saveLearned() {
+  localStorage.setItem("frenchlab_learned", JSON.stringify(Array.from(wordbookLearned)));
+}
+
+var vocabList = loadVocab();
+
+// ── SUBTITLE CORPUS ──────────────────────
+// Full transcript lines for word search
+const subtitleCorpus = [
+  {
+    "fr": "Inconsciemment, en fait, on pense : oui, l'IA va remplacer ces jobs, etc.",
+    "zh": "其实我们下意识里会想：对，AI 会取代这些工作等等。",
+    "time": 0
+  },
+  {
+    "fr": "Mais bon, il y a quand même des trucs qu'on devra faire nous-même.",
+    "zh": "但话说回来，还是有些事我们得自己来做。",
+    "time": 4
+  },
+  {
+    "fr": "Donc au final, ça nous rend plus puissant, etc. Mais en fait...",
+    "zh": "所以到头来，这让我们更强大等等。但其实……",
+    "time": 5
+  },
+  {
+    "fr": "on est en train de créer de l'intelligence.",
+    "zh": "我们正在（亲手）创造智能。",
+    "time": 8
+  },
+  {
+    "fr": "Et aujourd'hui, les trucs pour lesquels on est encore utile en tant qu'humain, c'est notre intelligence.",
+    "zh": "而如今，我们作为人类还有用武之地的那些方面，就是我们的智能。",
+    "time": 9
+  },
+  {
+    "fr": "Quand on arrive à remplacer tout ce qui est physique par des robots, par la robotique,",
+    "zh": "当我们能把一切体力活都用机器人、用机器人技术取代，",
+    "time": 13
+  },
+  {
+    "fr": "et tout ce qui est mental, tout ce qui est lié à l'intelligence, avec de l'IA,",
+    "zh": "而一切脑力活、一切跟智能相关的事都用 AI（取代），",
+    "time": 18
+  },
+  {
+    "fr": "qu'est-ce qu'on fait ? Peu de monde se fait la projection, genre vraiment.",
+    "zh": "那我们还能干嘛？很少有人真的去设想那个画面。",
+    "time": 21
+  },
+  {
+    "fr": "Si on a comme ressource l'intelligence, telle que l'intelligence humaine,",
+    "zh": "如果我们把智能——像人类智能那样的智能——当作资源，",
+    "time": 25
+  },
+  {
+    "fr": "toute forme de travail que je peux faire est inutile.",
+    "zh": "那我能做的任何形式的工作都变得没有意义了。",
+    "time": 27
+  }
+];
+
+// ── WORDBOOK STATE ─────────────────────────
+let wordbookOpen = false;
+let wordbookQueue = [];     // indices in display order
+let wordbookLearned = loadLearned();
+let cardRevealed = false;
+
+function toggleWordbook() {
+  wordbookOpen = !wordbookOpen;
+  document.getElementById("wordbookOverlay").classList.toggle("open", wordbookOpen);
+  document.getElementById("wordbookPanel").classList.toggle("open", wordbookOpen);
+  if (wordbookOpen) {
+    // Build queue from all not-yet-learned words
+    wordbookQueue = vocabList
+      .map((_, i) => i)
+      .filter(i => !wordbookLearned.has(i));
+    cardRevealed = false;
+    renderWordbook();
+  }
+}
+
+function renderWordbook() {
+  const total = vocabList.length;
+  const learned = wordbookLearned.size;
+
+  // Progress
+  const progress = document.getElementById("wordbookProgress");
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 100;
+  progress.innerHTML = `
+    ${learned} / ${total} 已掌握
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+  `;
+
+  // Empty state
+  const emptyEl = document.getElementById("wordbookEmpty");
+  const cardEl = document.getElementById("flashcard");
+  const actionsEl = document.getElementById("wordbookActions");
+
+  if (wordbookQueue.length === 0) {
+    emptyEl.classList.add("show");
+    cardEl.style.display = "none";
+    actionsEl.style.display = "none";
+    return;
+  }
+
+  emptyEl.classList.remove("show");
+  cardEl.style.display = "flex";
+  actionsEl.style.display = "flex";
+  cardEl.classList.remove("revealed");
+  cardRevealed = false;
+
+  const word = vocabList[wordbookQueue[0]];
+  document.getElementById("cardFront").textContent = word.word;
+  document.getElementById("cardBack").innerHTML = `<strong>${word.zh}</strong>`;
+  document.getElementById("cardExample").textContent = "« " + word.example + " »";
+}
+
+function revealCard() {
+  if (cardRevealed || wordbookQueue.length === 0) return;
+  cardRevealed = true;
+  document.getElementById("flashcard").classList.add("revealed");
+}
+
+function markWord(action) {
+  if (wordbookQueue.length === 0) return;
+
+  const idx = wordbookQueue.shift(); // remove from front
+
+  if (action === "know") {
+    wordbookLearned.add(idx);
+    saveLearned();
+  } else {
+    // "不认识" → push to the back of the queue
+    wordbookQueue.push(idx);
+  }
+
+  // 1) Mark card as "switching" to disable transitions
+  const cardEl = document.getElementById("flashcard");
+  cardEl.classList.add("switching");
+
+  // 2) Update content with new word
+  const word = vocabList[wordbookQueue[0]];
+  document.getElementById("cardFront").textContent = word.word;
+  document.getElementById("cardBack").innerHTML = `<strong>${word.zh}</strong>`;
+  document.getElementById("cardExample").textContent = "« " + word.example + " »";
+
+  // 3) Remove revealed class — with transitions off, no flash
+  cardEl.classList.remove("revealed");
+  cardRevealed = false;
+
+  // 4) Force reflow then re-enable transitions
+  void cardEl.offsetHeight;
+  cardEl.classList.remove("switching");
+
+  // 5) Update progress bar
+  const total = vocabList.length;
+  const learned = wordbookLearned.size;
+  const progress = document.getElementById("wordbookProgress");
+  const pct = total > 0 ? Math.round((learned / total) * 100) : 100;
+  progress.innerHTML = `
+    ${learned} / ${total} 已掌握
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+  `;
+
+  // 6) Check empty state
+  const emptyEl = document.getElementById("wordbookEmpty");
+  const actionsEl = document.getElementById("wordbookActions");
+  if (wordbookQueue.length === 0) {
+    cardEl.style.display = "none";
+    actionsEl.style.display = "none";
+    emptyEl.classList.add("show");
+  } else {
+    cardEl.style.display = "flex";
+    actionsEl.style.display = "flex";
+    emptyEl.classList.remove("show");
+  }
+}
+
+// ── CUSTOM WORD INPUT ─────────────────────
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function wordInText(word, text) {
+  // Split by common punctuation and whitespace, then check exact word match
+  const normalized = word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+  const words = text.toLowerCase().split(/[\s,.;:!?()'"«»\-—…\/]+/).filter(Boolean);
+  return words.some(w => {
+    const wNorm = w.replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+    return wNorm === normalized || w === word.toLowerCase();
+  });
+}
+
+function showWordFeedback(msg, type) {
+  const el = document.getElementById("wordAddFeedback");
+  el.textContent = msg;
+  el.className = "wordbook-add-feedback show " + type;
+  clearTimeout(el._timeout);
+  el._timeout = setTimeout(function() {
+    el.classList.remove("show");
+  }, 4000);
+}
+
+function addCustomWord() {
+  const input = document.getElementById("wordAddInput");
+  const word = input.value.trim();
+
+  if (!word) {
+    showWordFeedback("请输入法语单词", "notfound");
+    return;
+  }
+
+  // Check if already in vocabList
+  const normInput = word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+  const alreadyExists = vocabList.some(function(v) {
+    var n = v.word.toLowerCase().replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[ùûü]/g, 'u').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ç]/g, 'c');
+    return n === normInput;
+  });
+  if (alreadyExists) {
+    showWordFeedback('\u00AB' + word + '\u00BB \u5df2\u5728\u5355\u8bcd\u672c\u4e2d', 'exists');
+    return;
+  }
+
+  // Search subtitle corpus
+  var matches = [];
+  for (var i = 0; i < subtitleCorpus.length; i++) {
+    if (wordInText(word, subtitleCorpus[i].fr)) {
+      matches.push(subtitleCorpus[i]);
+    }
+  }
+
+  if (matches.length === 0) {
+    showWordFeedback('\u672a\u5728\u672c\u6b21\u89c6\u9891\u5b57\u5e55\u4e2d\u627e\u5230\u300c' + word + '\u300d\uff0c\u8bf7\u68c0\u67e5\u62fc\u5199\u6216\u5c1d\u8bd5\u5176\u4ed6\u5355\u8bcd', 'notfound');
+    return;
+  }
+
+  // Found — use first match, prefer shorter sentences as examples
+  matches.sort(function(a, b) { return a.fr.length - b.fr.length; });
+  var best = matches[0];
+  // For really long sentences, prefer one with the word in a concise clause
+  for (var j = 0; j < matches.length; j++) {
+    if (matches[j].fr.length < 60 && matches[j].fr.length > 10) {
+      best = matches[j];
+      break;
+    }
+  }
+
+  // Build a concise definition from the sentence translation
+  var def = best.zh;
+  if (def.length > 50) def = def.substring(0, 48) + '\u2026';
+
+  var entry = {
+    word: word,
+    zh: def,
+    example: best.fr,
+    fromSubtitle: true,
+  };
+
+  vocabList.push(entry);
+  saveVocab();
+  var newIdx = vocabList.length - 1;
+
+  // If wordbook is open, insert at front of queue so it shows immediately
+  if (wordbookOpen) {
+    wordbookQueue.unshift(newIdx);
+    renderWordbook();
+  }
+
+  // Clear input and show success
+  input.value = '';
+  var preview = best.fr.length > 40 ? best.fr.substring(0, 38) + '\u2026' : best.fr;
+  showWordFeedback('\u2714 \u5df2\u4ece\u5b57\u5e55\u4e2d\u627e\u5230\u300c' + word + '\u300d\uff1a' + preview, 'success');
+}
+
+// ── SUBTITLE PANEL ──────────────────────────
+let subtitleActiveTime = null;   // currently highlighted time
+let subtitleInterval = null;     // polling interval ID
+
+function renderSubtitlePanel() {
+  const panel = document.getElementById("subtitlePanel");
+  panel.innerHTML = subtitleCorpus.map(line => `
+    <div class="subtitle-line" data-time="${line.time}"
+         onclick="seekTo(${line.time})">
+      <span class="sub-time">${formatTime(line.time)}</span>
+      <span class="sub-fr">${line.fr}</span>
+      <span class="sub-zh">${line.zh}</span>
+    </div>
+  `).join("");
+}
+
+function highlightSubtitle(seconds) {
+  // Find the current subtitle line by time
+  let bestTime = null;
+  for (let i = 0; i < subtitleCorpus.length; i++) {
+    if (subtitleCorpus[i].time <= seconds) {
+      bestTime = subtitleCorpus[i].time;
+    } else {
+      break;
+    }
+  }
+  if (bestTime === subtitleActiveTime) return;
+  subtitleActiveTime = bestTime;
+
+  // Update active class
+  const lines = document.querySelectorAll(".subtitle-line");
+  lines.forEach(el => {
+    const t = parseInt(el.getAttribute("data-time"));
+    el.classList.toggle("active", t === bestTime);
+  });
+
+  // Auto-scroll to the active line
+  if (bestTime !== null) {
+    const activeEl = document.querySelector(".subtitle-line.active");
+    if (activeEl) {
+      activeEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+}
+
+function startSubtitleTracking() {
+  stopSubtitleTracking();
+  subtitleInterval = setInterval(function() {
+    if (ytPlayerReady && ytPlayer && ytPlayer.getCurrentTime) {
+      try {
+        var t = ytPlayer.getCurrentTime();
+        if (typeof t === "number") highlightSubtitle(t);
+      } catch (_) {}
+    }
+  }, 500);
+}
+
+function stopSubtitleTracking() {
+  if (subtitleInterval) {
+    clearInterval(subtitleInterval);
+    subtitleInterval = null;
+  }
+}
+
+// ── INIT ──────────────────────────────────
+renderGrammarList();
+renderSlangList();
+renderLearningSpace();
+renderSubtitlePanel();
+startSubtitleTracking();
+</script>
+</body>
+</html>
