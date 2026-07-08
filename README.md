@@ -24,6 +24,9 @@ French YouTube URL and it produces a single `french-lab-<id>.html` you can open 
 - **Snaps every example to its real subtitle timestamp** so click-to-jump lands exactly right.
 - **Builds a polished HTML**: scrollable expression list (CEFR-tagged), YouTube IFrame player,
   bilingual subtitle panel with live highlight, and a flashcard wordbook. Handles Shorts (9:16).
+- **(Optional) Exports to an Obsidian vault**: one Markdown note per expression/word. Running it
+  again for a different video doesn't duplicate notes — examples for the same expression/word
+  are merged into the existing note, grouped by source video with click-through timestamps.
 
 ## Prerequisites
 
@@ -70,6 +73,17 @@ python3 scripts/build_html.py \
 
 Then deploy `french-lab-VIDEO_ID.html` to an HTTPS host and open it in Chrome.
 
+```bash
+# 6. (Optional) Export expressions + vocab into an Obsidian vault, merging across videos
+python3 scripts/export_obsidian.py \
+    --vault "/path/to/ObsidianVault" \
+    --video-id VIDEO_ID \
+    --video-title "video title" \
+    --channel "channel name" \
+    --expressions work/expressions.snapped.json \
+    --vocab work/vocab.json
+```
+
 ## Design principle: fast by scripting
 
 Deterministic, mechanical steps (fetch / merge / **timestamp snapping** / HTML assembly) are
@@ -89,7 +103,8 @@ french-youtube-lab/
 │   ├── fetch_transcript.py      # Supadata fetch (handles "no subtitles" gotcha)
 │   ├── merge_sentences.py       # segments → sentences
 │   ├── snap_timestamps.py       # ★ align examples to real subtitle times
-│   └── build_html.py            # fill template → final HTML
+│   ├── build_html.py            # fill template → final HTML
+│   └── export_obsidian.py       # optional: export/merge notes into an Obsidian vault
 ├── examples/                    # 3 ready-made demo pages (see examples/README.md)
 └── references/
     ├── embed-stability.md       # YouTube 153 / bot-challenge: causes & fixes
