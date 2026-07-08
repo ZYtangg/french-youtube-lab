@@ -1,6 +1,6 @@
 ---
 name: french-youtube-lab
-description: "把任意法语 YouTube 视频（含 Shorts）转成一个自包含的「地道法语表达」学习网页：抓取字幕 → 挖掘高频·精妙·native 的地道表达 → 自动填充 B1+ 词汇本 → 生成可播放视频、例句时间戳精准跳转的 HTML。触发词：French YouTube learning, 法语YouTube学习, 地道法语表达, French idiom lab."
+description: "把任意法语 YouTube 视频（含 Shorts）转成一个自包含的「地道法语表达」学习网页：抓取字幕 → 挖掘高频·精妙·native 的地道表达 → 自动填充 B1+ 词汇本 → 生成可播放视频、例句时间戳精准跳转的 HTML。可选：导出到 Obsidian 笔记库，跨视频自动去重合并同一表达/单词的例句。触发词：French YouTube learning, 法语YouTube学习, 地道法语表达, French idiom lab, Obsidian export."
 license: MIT
 compatible_with: "Codebuddy / Claude Code style agents with Bash + file tools"
 ---
@@ -46,6 +46,9 @@ sentences   ── Agent 翻译每句 zh ──▶  corpus.json   (fr + zh + tim
 scripts/build_html.py                 → french-lab-<id>.html
   ▼
 部署到 HTTPS 公开域名（不要 localhost）
+  │  scripts/export_obsidian.py（可选）→ 写入/合并到 Obsidian vault 的 Markdown 笔记
+  ▼
+（可选）积累成个人的地道表达 + 单词笔记库，跨视频自动去重合并
 ```
 
 ### Step 1 — 抓字幕
@@ -126,6 +129,25 @@ python3 scripts/build_html.py \
 
 用 CloudStudio / Vercel / Cloudflare Pages 等把 `french-lab-VIDEO_ID.html` 部署到 HTTPS 公开域名，把链接给用户。
 提醒用户：用 Chrome + 登录 Google 账号观看，若仍要人机验证见 `references/embed-stability.md`。
+
+### Step 7（可选）— 导出到 Obsidian 笔记库
+
+如果用户想把挖到的表达/单词整理进自己的 Obsidian 库（或任意本地文件夹），跑：
+
+```bash
+python3 scripts/export_obsidian.py \
+  --vault "/path/to/ObsidianVault" \
+  --video-id VIDEO_ID \
+  --video-title "视频标题" \
+  --channel "频道名" \
+  --expressions work/expressions.snapped.json \
+  --vocab work/vocab.json
+```
+
+- 每条表达 / 每个单词各生成**一个独立的 Markdown 笔记**（带 YAML frontmatter：CEFR 级别、标签），方便在 Obsidian 里搜索、按标签筛选。
+- **跨视频自动去重合并**：如果这条表达/单词在之前处理过的别的视频里也出现过，不会新建重复笔记，而是把新视频的例句追加进同一个笔记文件，按「来自：视频标题」分组，例句自带跳转回该视频对应时间戳的链接。
+- 合并靠的是 vault 里一个隐藏的索引文件 `.french-lab-index.json`（不是靠解析已有的 Markdown 文本），所以每次都会从索引**完整重新生成** `.md`，不会因为格式解析失败而弄坏已有笔记。用同一个 `--video-id` 重复跑同一个视频是幂等的，不会重复累加例句。
+- `--vault` 路径需要用户提供（默认是 Obsidian 库根目录，也可以是任意普通文件夹）；这一步是可选的，不影响 Step 5/6 的 HTML 生成与部署。
 
 ## HTML 功能（模板已内置）
 
